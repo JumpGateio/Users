@@ -1,6 +1,6 @@
 {
-    "name":        "nukacode/users",
-    "description": "Adds basic user functionality to a NukaCode site.",
+    "name":        "jumpgate/users",
+    "description": "Adds basic user functionality to a JumpGate site.",
     "license":     "MIT",
     "authors":     [
         {
@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "nukacode/core": "^3.0"
+        "jumpgate/core": "*@dev"
     },
     "autoload":    {
         "classmap": [
@@ -22,7 +22,14 @@
             "src/database/social_migrations"
         ],
         "psr-4":    {
-            "NukaCode\\Users\\": "src/NukaCode/Users"
+            "JumpGate\\Users\\": "src/JumpGate/Users"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:NukaSRB/Core.git"
+        }
+    ]
 }
