@@ -1,0 +1,24 @@
+<?php
+
+use Illuminate\Support\Facades\DB;
+use JumpGate\Core\Abstracts\Seeder;
+
+class __NAME__ extends Seeder
+{
+    /**
+     * Data to be inserted into the database.
+     *
+     * @var array
+     */
+    protected $inserts = __INSERTS__;
+
+    /**
+     * Empty the table and add the new data into it.
+     */
+    public function run()
+    {
+        $this->truncate('__TABLE__');
+
+        $this->db->table('__TABLE__')->insert($this->inserts);
+    }
+}

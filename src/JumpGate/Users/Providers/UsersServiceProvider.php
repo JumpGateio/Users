@@ -1,0 +1,103 @@
+<?php namespace JumpGate\Users\Providers;
+
+use Config;
+use Illuminate\Support\ServiceProvider;
+use JumpGate\Users\Console\Commands\AddPermissions;
+
+class UsersServiceProvider extends ServiceProvider
+{
+
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
+
+    /**
+     * Register bindings in the container.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        if (! class_exists('\App\Models\User')) {
+            $this->addUserModel();
+        }
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->loadConfigs();
+        $this->loadMigrations();
+        $this->loadViews();
+        $this->loadCommands();
+    }
+
+    /**
+     * Load the configs.
+     *
+     * @return void
+     */
+    protected function loadConfigs()
+    {
+        $this->publishes([
+            __DIR__ . '/../../../config/users.php' => config_path('jumpgate/users.php'),
+        ]);
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../../config/users.php', 'jumpgate.users'
+        );
+    }
+
+    /**
+     * Load the migrations.
+     *
+     * @return void
+     */
+    protected function loadMigrations()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../../../database/migrations');
+
+        if ($this->app['config']->get('jumpgate.users.enable_social')) {
+            $this->loadMigrationsFrom(__DIR__ . '/../../../database/social_migrations');
+        }
+    }
+
+    /**
+     * Register views
+     *
+     * @return void
+     */
+    protected function loadViews()
+    {
+        if ($this->app['config']->get('jumpgate.users.load_views')) {
+            $this->app['view']->addLocation(__DIR__ . '/../../../views');
+        }
+    }
+
+    private function loadCommands()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                AddPermissions::class,
+            ]);
+        }
+    }
+
+    private function addUserModel()
+    {
+        $files = app('files');
+
+        if (! $files->exists(app_path('Models'))) {
+            $files->makeDirectory(app_path('Models'), 0755, true);
+        }
+
+        $files->copy(__DIR__ . '/../../../stubs/UserModel.php', app_path('Models/User.php'));
+    }
+}

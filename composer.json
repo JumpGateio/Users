@@ -1,35 +1,51 @@
 {
-    "name":        "jumpgate/users",
+    "name": "jumpgate/users",
     "description": "Adds basic user functionality to a JumpGate site.",
-    "license":     "MIT",
-    "authors":     [
+    "license": "MIT",
+    "authors": [
         {
-            "name":  "Stygian",
+            "name": "Stygian",
             "email": "stygian.warlock.v2@gmail.com"
         },
         {
-            "name":  "Riddles",
+            "name": "Riddles",
             "email": "riddles@dev-toolbox.com"
         }
     ],
     "require": {
-        "jumpgate/core": "*@dev"
+        "laravel/framework": "~5.0|~5.1|~5.2|~5.3|~5.4",
+        "jumpgate/database": "*@dev",
+        "jumpgate/core": "*@dev",
+        "jumpgate/view-resolution": "*@dev",
+        "laravelcollective/html": "^5.4"
     },
-    "autoload":    {
+    "autoload": {
         "classmap": [
             "src/database/migrations",
             "src/database/seeds",
             "src/database/social_migrations"
         ],
-        "psr-4":    {
+        "psr-4": {
             "JumpGate\\Users\\": "src/JumpGate/Users"
         }
     },
     "minimum-stability": "dev",
     "repositories": [
         {
-            "type": "vcs",
-            "url": "git@github.com:NukaSRB/Core.git"
+            "type": "path",
+            "url": "../Users"
+        },
+        {
+            "type": "path",
+            "url": "../Core"
+        },
+        {
+            "type": "path",
+            "url": "../ViewResolution"
+        },
+        {
+            "type": "path",
+            "url": "../Database"
         }
     ]
 }

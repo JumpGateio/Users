@@ -1,8 +1,8 @@
 <?php
 
 // Authentication
-Route::group(['middleware' => 'guest'], function () {
-    if (config('users.enable_social') == false) {
+Route::group(['middleware' => 'guest', 'namespace' => 'JumpGate\Users\Http\Controllers'], function () {
+    if (config('jumpgate.users.enable_social') == false) {
         Route::get('login', [
             'as'   => 'auth.login',
             'uses' => 'AuthController@login',
@@ -41,8 +41,8 @@ Route::group(['middleware' => 'guest'], function () {
     }
 });
 
-Route::group(['middleware' => ['auth']], function () {
-    if (config('users.enable_social') == false) {
+Route::group(['middleware' => ['auth'], 'namespace' => 'JumpGate\Users\Http\Controllers'], function () {
+    if (config('jumpgate.users.enable_social') == false) {
         Route::get('logout', [
             'as'   => 'auth.logout',
             'uses' => 'AuthController@logout',
