@@ -17,7 +17,6 @@ class CreateUsersTables extends Migration
             $table->increments('id');
             $table->string('email')->index()->unique();
             $table->string('password', 64);
-            $table->string('remember_token', 100)->nullable();
             $table->tinyInteger('status_id')->default(2);
             $table->integer('failed_login_attempts')->default(0);
             $table->integer('authenticated_as')->nullable();
@@ -25,6 +24,7 @@ class CreateUsersTables extends Migration
             $table->timestamp('activated_at')->nullable();
             $table->timestamp('blocked_at')->nullable();
             $table->timestamp('password_updated_at')->nullable();
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -37,6 +37,6 @@ class CreateUsersTables extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::dropIfExists('users');
     }
 }
