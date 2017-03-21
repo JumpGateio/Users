@@ -21,7 +21,7 @@ class Activation extends BaseRoute implements Routes
 
     public function routes(Router $router)
     {
-        if (config('jumpgate.users.enable_social') == false) {
+        if (config('jumpgate.users.enable_social') === false) {
             $this->standardAuth($router);
         }
     }
