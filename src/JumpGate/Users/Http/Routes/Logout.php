@@ -3,33 +3,19 @@
 namespace JumpGate\Users\Http\Routes;
 
 use JumpGate\Core\Contracts\Routes;
-use JumpGate\Core\Providers\Routes as BaseRoutes;
+use JumpGate\Core\Http\Routes\BaseRoute;
 use Illuminate\Routing\Router;
 
-class Auth extends BaseRoutes implements Routes
+class Logout extends BaseRoute implements Routes
 {
-    public function namespacing()
-    {
-        return 'JumpGate\Users\Http\Controllers';
-    }
+    public $namespace = 'JumpGate\Users\Http\Controllers';
 
-    public function prefix()
-    {
-        return $this->getContext('default');
-    }
+    public $context = 'default';
 
-    public function middleware()
-    {
-        return [
-            'web',
-            'auth',
-        ];
-    }
-
-    public function patterns()
-    {
-        return [];
-    }
+    public $middleware = [
+        'web',
+        'auth',
+    ];
 
     public function routes(Router $router)
     {
@@ -44,13 +30,13 @@ class Auth extends BaseRoutes implements Routes
     {
         $router->get('logout')
                ->name('auth.logout')
-               ->uses('AuthController@logout');
+               ->uses('Authentication@logout');
     }
 
     private function socialAuth(Router $router)
     {
         $router->get('logout')
                ->name('auth.logout')
-               ->uses('SocialAuthController@logout');
+               ->uses('SocialAuthentication@logout');
     }
 }
