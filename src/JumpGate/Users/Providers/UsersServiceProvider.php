@@ -77,7 +77,9 @@ class UsersServiceProvider extends ServiceProvider
     protected function loadViews()
     {
         if ($this->app['config']->get('jumpgate.users.load_views')) {
-            $this->app['view']->addLocation(__DIR__ . '/../../../views');
+            $this->app['view']->addLocation(
+                __DIR__ . '/../../../views/' . $this->app['config']->get('jumpgate.users.css_framework')
+            );
         }
     }
 
