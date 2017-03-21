@@ -17,7 +17,8 @@
         "jumpgate/database": "*@dev",
         "jumpgate/core": "*@dev",
         "jumpgate/view-resolution": "*@dev",
-        "laravelcollective/html": "^5.4"
+        "laravelcollective/html": "^5.4",
+        "kodeine/laravel-acl": "*@dev"
     },
     "autoload": {
         "classmap": [
@@ -46,6 +47,10 @@
         {
             "type": "path",
             "url": "../Database"
+        },
+        {
+            "type": "path",
+            "url": "../ACL"
         }
     ]
 }
