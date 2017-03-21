@@ -3,9 +3,9 @@
 namespace JumpGate\Users\Models;
 
 use JumpGate\Database\Collections\EloquentCollection;
-use Kodeine\Acl\Models\Eloquent\Permission as BasePermission;
+use Kodeine\Acl\Models\Eloquent\Role as BaseRole;
 
-class Permission extends BasePermission
+class Role extends BaseRole
 {
     /**
      * Use the custom collection that allows tapping.

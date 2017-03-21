@@ -3,14 +3,25 @@
 namespace JumpGate\Users\Models\User;
 
 use App\Models\BaseModel;
+use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Detail extends BaseModel
 {
     use SoftDeletes;
 
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'user_details';
 
+    /**
+     * The attributes that can be safely filled.
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_id',
         'first_name',
@@ -23,7 +34,7 @@ class Detail extends BaseModel
     ];
 
     /**
-     * Tell eloquent to set deleted_at as a carbon date.
+     * The attributes that should be mutated to Carbon dates.
      *
      * @var array
      */
@@ -38,18 +49,26 @@ class Detail extends BaseModel
      */
     public function getFullNameAttribute()
     {
-        return implode(' ', array_filter([
+        $names = array_filter([
             $this->first_name,
             $this->middle_name,
             $this->last_name,
-        ]));
+        ]);
+
+        if (empty($names)) {
+            return null;
+        }
+
+        return implode(' ', $names);
     }
 
     /**
-     * @return mixed
+     * All details belong to a user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
-        return $this->belongsTo(config('auth.providers.users.model'), 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
