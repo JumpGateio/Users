@@ -9,7 +9,7 @@ use JumpGate\Users\Events\UserLoggedIn;
 use JumpGate\Users\Events\UserRegistered;
 use JumpGate\Users\Models\User\Social;
 
-class SocialAuthController extends BaseController
+class SocialAuthentication extends BaseController
 {
     /**
      * @var array
@@ -41,7 +41,7 @@ class SocialAuthController extends BaseController
      *
      * @param null|string $provider
      *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function login($provider = null)
     {
@@ -58,7 +58,7 @@ class SocialAuthController extends BaseController
      *
      * @param null|string $provider
      *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function callback($provider = null)
     {
@@ -120,7 +120,7 @@ class SocialAuthController extends BaseController
     /**
      * Log the user out.
      *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function logout()
     {

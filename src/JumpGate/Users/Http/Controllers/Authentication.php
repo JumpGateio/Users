@@ -2,16 +2,15 @@
 
 namespace JumpGate\Users\Http\Controllers;
 
-use App\Http\Controllers\BaseController;
-use App\Models\User;
+use JumpGate\Core\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\DB;
-use JumpGate\Users\Events\UserLoggedIn;
-use JumpGate\Users\Events\UserRegistered;
 use JumpGate\Users\Http\Requests\Login;
 use JumpGate\Users\Http\Requests\Registration;
+use JumpGate\Users\Models\User\Status;
+use JumpGate\Users\Services\Login as LoginService;
 use JumpGate\Users\Services\Registration as RegistrationService;
 
-class AuthController extends BaseController
+class Authentication extends BaseController
 {
     /**
      * Display the login form.
@@ -28,32 +27,34 @@ class AuthController extends BaseController
     }
 
     /**
-     * Log the user in
+     * Handle validating the login details.
      *
-     * @param Login $request
+     * @param \JumpGate\Users\Http\Requests\Login $request
+     * @param \JumpGate\Users\Services\Login      $loginService
      *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function handleLogin(Login $request)
+    public function handleLogin(Login $request, LoginService $loginService)
     {
-        // Set the auth data
+        // Set up the auth data
         $userData = [
             'email'    => $request->get('email'),
             'password' => $request->get('password'),
         ];
 
-        // Log in successful
-        if (auth()->attempt($userData, $request->get('remember', false))) {
-            event(new UserLoggedIn(auth()->user(), null));
+        // Let the login service handle the checks.
+        list($success, $message, $route) = $loginService->handle($userData);
 
+        // If the checks passed, redirect them where they were going.
+        if ($success) {
             return redirect()
-                ->intended(route('home'))
-                ->with('message', 'You have been logged in.');
+                ->intended(route($route))
+                ->with('message', $message);
         }
 
-        // Login failed
-        return redirect(route('auth.login'))
-            ->with('errors', ['Your email or password was incorrect.']);
+        // If the checks failed, redirect and let them know why it failed.
+        return redirect(route($route))
+            ->with('error', $message);
     }
 
     /**
@@ -71,23 +72,20 @@ class AuthController extends BaseController
     }
 
     /**
-     * Register a user
+     * Handle validating the registration.
      *
      * @param \JumpGate\Users\Http\Requests\Registration $request
      * @param \JumpGate\Users\Services\Registration      $registrationService
      *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function handleRegister(Registration $request, RegistrationService $registrationService)
     {
         DB::beginTransaction();
 
+        // Try to register the user.
         try {
             $user = $registrationService->handle();
-
-            auth()->login($user);
-
-            event(new UserRegistered(auth()->user()));
         } catch (\Exception $exception) {
             DB::rollBack();
 
@@ -99,6 +97,14 @@ class AuthController extends BaseController
 
         DB::commit();
 
+        // If the app requires activation, generate a token and email them.
+        if (config('jumpgate.users.require_email_activation')) {
+            return redirect(route('auth.activation.generate', $user->id));
+        }
+
+        // Log the user in.
+        auth()->login($user);
+
         return redirect(route('home'))
             ->with('message', 'Your account has been created.');
     }
@@ -106,7 +112,7 @@ class AuthController extends BaseController
     /**
      * Log the user out.
      *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function logout()
     {
