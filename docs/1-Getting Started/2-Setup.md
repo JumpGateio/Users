@@ -51,9 +51,8 @@ This will create the users table and all of the acl tables needed for permission
 Make sure you update `config/jumpgate/users.php` and set all of your details before running these commands.
 
 ```
-php artisan db:seed --class=AclSeeder
-php artisan db:seed --class=UserStatusSeeder
-php artisan db:seed --class=UserSeeder
+php artisan db:seed --class=UserStatus
+php artisan db:seed --class=Roles
 ```
 
 <a name="model"></a>
@@ -66,14 +65,36 @@ Next add a model for your `User` model.  It can be empty but should extend `Jump
 ## Optional
 <a name="routes"></a>
 ### Routes
-If you would like to use the included routes, add the following to your `app/Providers/RouteServiceProvider.php` file.
+If you would like to use the included class-based routes, add the following to your `app/Providers/RouteServiceProvider.php` file.
 
 ```php
 $providers = [
     ...
-    \JumpGate\Users\Http\Routes\Guest::class,
-    \JumpGate\Users\Http\Routes\Auth::class,
+    \JumpGate\Users\Http\Routes\Activation::class,
+    \JumpGate\Users\Http\Routes\Authentication::class,
+    \JumpGate\Users\Http\Routes\ForgotPassword::class,
+    \JumpGate\Users\Http\Routes\Logout::class,
 ];
+```
+
+If you would like to use a standard routes file, you can include the provided routes file in your map method.
+
+```php
+/**
+ * Define the routes for the application.
+ *
+ * @return void
+ */
+public function map()
+{
+    $this->mapApiRoutes();
+
+    $this->mapWebRoutes();
+
+    $this->mapRouteClasses();
+
+    include_once (base_path('vendor/jumpgate/users/src/routes/routes.php'));
+}
 ```
 
 <a name="middleware"></a>
