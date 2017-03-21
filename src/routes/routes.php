@@ -1,5 +1,8 @@
 <?php
 
-Route::group(['middleware' => 'web', 'namespace' => 'NukaCode\Users\Http\Controllers'], function () {
-    require('auth.php');
+Route::group(['middleware' => 'web'], function () {
+    require('activation.php');
+    require('authentication.php');
+    require('forgot-password.php');
+    require('logout.php');
 });
