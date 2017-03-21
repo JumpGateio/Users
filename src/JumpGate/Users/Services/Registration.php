@@ -3,6 +3,7 @@
 namespace JumpGate\Users\Services;
 
 use App\Models\User;
+use JumpGate\Users\Events\UserRegistered;
 use JumpGate\Users\Models\User\Detail;
 
 class Registration
@@ -18,28 +19,34 @@ class Registration
     private $userDetails;
 
     /**
-     * RegistrationService constructor.
-     *
      * @param \JumpGate\Users\Models\User\Detail $userDetails
      */
     public function __construct(Detail $userDetails)
     {
-        $userModel         = config('auth.providers.users.model');
+        $userModel = config('auth.providers.users.model');
+
         $this->user        = new $userModel;
         $this->userDetails = $userDetails;
     }
 
+    /**
+     * @return \JumpGate\Users\Models\User|boolean
+     */
     public function handle()
     {
         // Create the new user
         $user = $this->user->create($this->getUserFromRequest());
 
+        // If we created the user, add the extra details needed to finish them.
         if ($user) {
             // Add the user details.
             $this->userDetails->create($this->getUserDetailsFromRequest($user));
 
             // Assign the user to the default group
-            $user->assignGroup(config('jumpgate.users.default_group'));
+            $user->assignRole(config('jumpgate.users.default_group'));
+
+            // Fire the registered event.
+            event(new UserRegistered($user));
         }
 
         return $user;
