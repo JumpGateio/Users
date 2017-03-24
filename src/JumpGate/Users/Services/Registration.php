@@ -4,6 +4,7 @@ namespace JumpGate\Users\Services;
 
 use App\Models\User;
 use JumpGate\Users\Events\UserRegistered;
+use JumpGate\Users\Models\Social\Provider;
 use JumpGate\Users\Models\User\Detail;
 
 class Registration
@@ -30,6 +31,8 @@ class Registration
     }
 
     /**
+     * Register a new user.
+     *
      * @return \JumpGate\Users\Models\User|boolean
      */
     public function registerUser()
@@ -47,6 +50,37 @@ class Registration
 
             // Fire the registered event.
             event(new UserRegistered($user));
+        }
+
+        return $user;
+    }
+
+    /**
+     * Register a new user from a social login.
+     *
+     * @param object $socialUser
+     * @param string $provider
+     *
+     * @return bool|\JumpGate\Users\Models\User
+     */
+    public function registerSocialUser($socialUser, $provider)
+    {
+        // Create the new user
+        $user = $this->user->create($this->getUserFromSocial($socialUser));
+
+        // If we created the user, add the extra details needed to finish them.
+        if ($user) {
+            // Add the user details.
+            $this->userDetails->create($this->getUserDetailsFromSocial($socialUser, $user));
+
+            // Assign the user to the default group
+            $user->assignRole(config('jumpgate.users.default_group'));
+
+            // Add the user's social account details.
+            $user->addSocial($socialUser, $provider);
+
+            // Fire the registered event.
+            event(new UserRegistered($user, $socialUser));
         }
 
         return $user;
@@ -82,6 +116,28 @@ class Registration
         );
 
         $details['user_id'] = $user->id;
+
+        return array_filter($details);
+    }
+
+    private function getUserFromSocial($socialUser)
+    {
+        return ['email' => $socialUser->getEmail()];
+    }
+
+    private function getUserDetailsFromSocial($socialUser, $user)
+    {
+        $names    = explode(' ', $socialUser->getName());
+        $username = is_null($socialUser->getNickname())
+            ? $socialUser->getEmail()
+            : $socialUser->getNickname();
+
+        $details = [
+            'user_id'      => $user->id,
+            'first_name'   => isset($names[0]) ? $names[0] : null,
+            'last_name'    => isset($names[1]) ? $names[1] : null,
+            'display_name' => $username,
+        ];
 
         return array_filter($details);
     }
