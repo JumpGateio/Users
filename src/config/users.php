@@ -45,7 +45,7 @@ return [
     */
 
     'blocking' => [
-        ['failed_login_attempts', '>=', 10]
+        ['failed_login_attempts', '>=', 10],
     ],
 
     /*
@@ -73,7 +73,10 @@ return [
     */
 
     'enable_social' => false,
-    'providers'     => [
+
+    'social_and_standard' => false,
+
+    'providers' => [
         [
             'driver' => null,
             'scopes' => [],

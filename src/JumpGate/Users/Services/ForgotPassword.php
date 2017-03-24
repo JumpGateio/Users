@@ -3,6 +3,7 @@
 namespace JumpGate\Users\Services;
 
 use App\Models\User;
+use JumpGate\Core\Services\Response;
 use JumpGate\Users\Models\User\Token;
 
 class ForgotPassword

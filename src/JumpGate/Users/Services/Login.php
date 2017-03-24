@@ -2,6 +2,7 @@
 
 namespace JumpGate\Users\Services;
 
+use JumpGate\Core\Services\Response;
 use JumpGate\Users\Events\UserLoggedIn;
 use JumpGate\Users\Models\User;
 use JumpGate\Users\Models\User\Status;

@@ -163,7 +163,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Core",
-                "reference": null,
+                "reference": "5dc93959fa606c792806970bb7934fa4540b03cf",
                 "shasum": null
             },
             "require": {
@@ -218,7 +218,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Database",
-                "reference": "079523e7abe82f4607e6a6a854f30f4718700948",
+                "reference": null,
                 "shasum": null
             },
             "require": {
