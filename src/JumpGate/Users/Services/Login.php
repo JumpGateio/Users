@@ -13,9 +13,9 @@ class Login
      *
      * @param array $userData The supplied email/password.
      *
-     * @return array
+     * @return Response
      */
-    public function handle(array $userData)
+    public function loginUser(array $userData)
     {
         // Login has failed with this email/password.
         if (! auth()->attempt($userData, request('remember', false))) {
@@ -49,11 +49,8 @@ class Login
         // Try to track the failed login.
         User::failedLogin(request('email'));
 
-        return [
-            false,
-            'Your email or password was incorrect.',
-            'auth.login',
-        ];
+        return Response::failed('Your email or password was incorrect.')
+            ->route('auth.login');
     }
 
     /**
@@ -69,11 +66,9 @@ class Login
         // Log the user out.
         auth()->logout();
 
-        return [
-            false,
-            'Your account is not yet activated.',
-            'auth.login', // todo - turn this into a page to resend activation.
-        ];
+        // todo - change route into a page offering to resend the email
+        return Response::failed('Your account is not yet activated.')
+                       ->route('auth.login');
     }
 
     /**
@@ -89,11 +84,9 @@ class Login
         // Log the user out.
         auth()->logout();
 
-        return [
-            false,
-            'You are not allowed to access the site at this time.',
-            'auth.login', // todo - turn this into a page detailing that they have been blocked.
-        ];
+        // todo - change route into a page detailing that they have been blocked.
+        return Response::failed('You are not allowed to access the site at this time.')
+                       ->route('auth.login');
     }
 
     /**
@@ -109,10 +102,7 @@ class Login
         // Update the user with the log in details.
         auth()->user()->updateLogin();
 
-        return [
-            true,
-            'You have been logged in.',
-            'home',
-        ];
+        return Response::passed('You have been logged in.')
+                       ->route('home');
     }
 }

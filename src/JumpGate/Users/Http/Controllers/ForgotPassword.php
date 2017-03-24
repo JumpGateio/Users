@@ -5,9 +5,23 @@ namespace JumpGate\Users\Http\Controllers;
 use App\Http\Controllers\BaseController;
 use App\Models\User;
 use JumpGate\Users\Models\User\Token;
+use JumpGate\Users\Services\ForgotPassword as ForgotPasswordService;
 
 class ForgotPassword extends BaseController
 {
+    /**
+     * @var \JumpGate\Users\Services\ForgotPassword
+     */
+    private $forgotPassword;
+
+    /**
+     * @param \JumpGate\Users\Services\ForgotPassword $forgotPassword
+     */
+    public function __construct(ForgotPasswordService $forgotPassword)
+    {
+        $this->forgotPassword = $forgotPassword;
+    }
+
     /**
      * Display the form to request a password reset link.
      *
@@ -33,12 +47,8 @@ class ForgotPassword extends BaseController
     {
         $this->validate(request(), ['email' => 'required|email']);
 
-        $user = User::where('email', request('email'))->first();
-
-        // If the email/user exists, trigger the reset.
-        if (! is_null($user)) {
-            $user->generatePasswordResetToken();
-        }
+        // Attempt to send the email.
+        $this->forgotPassword->sendEmail(request('email'));
 
         return redirect(route('auth.password.sent'));
     }
@@ -87,20 +97,10 @@ class ForgotPassword extends BaseController
         // Make sure we have everything we need from the form.
         $this->validate(request(), $this->rules());
 
-        // Get the token being used.
-        $token = (new Token)->findByToken(request('token'));
-
-        // Make sure the correct email was supplied.
-        if ($token->user->email !== request('email')) {
-            return redirect(route('auth.password.reset'))
-                ->with('message', 'The email does not match this token.');
-        }
-
-        // Reset the user's password and let them log in.
-        $token->user->resetPassword(request('password'));
-
-        return redirect(route('auth.login'))
-            ->with('message', 'Password updated.');
+        // Try to update the user's password.
+        return $this->forgotPassword
+            ->updatePassword(request('token'), request('email'), request('password'))
+            ->redirect();
     }
 
     /**

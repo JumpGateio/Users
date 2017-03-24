@@ -32,7 +32,7 @@ class Registration
     /**
      * @return \JumpGate\Users\Models\User|boolean
      */
-    public function handle()
+    public function registerUser()
     {
         // Create the new user
         $user = $this->user->create($this->getUserFromRequest());

@@ -3,12 +3,23 @@
 namespace JumpGate\Users\Http\Controllers;
 
 use JumpGate\Core\Http\Controllers\BaseController;
-use App\Models\User;
-use JumpGate\Users\Models\User\Status;
-use JumpGate\Users\Models\User\Token;
+use JumpGate\Users\Services\Activation as ActivationService;
 
 class Activation extends BaseController
 {
+    /**
+     * @var \JumpGate\Users\Services\Activation
+     */
+    private $activation;
+
+    /**
+     * @param \JumpGate\Users\Services\Activation $activation
+     */
+    public function __construct(ActivationService $activation)
+    {
+        $this->activation = $activation;
+    }
+
     /**
      * Generate an activation token for a user.
      *
@@ -18,10 +29,7 @@ class Activation extends BaseController
      */
     public function generate($userId)
     {
-        $user = User::find($userId);
-
-        $user->generateActivationToken();
-        $user->setStatus(Status::INACTIVE);
+        $this->activation->generateToken($userId);
 
         return redirect(route('auth.activation.sent'));
     }
@@ -34,12 +42,9 @@ class Activation extends BaseController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function reSend($tokenString)
+    public function resend($tokenString)
     {
-        $token = (new Token)->findByToken($tokenString);
-        $token->extend();
-
-        $token->notifyUser();
+        $this->activation->resend($tokenString);
 
         return redirect(route('auth.activation.sent'));
     }
@@ -53,20 +58,9 @@ class Activation extends BaseController
      */
     public function activate($tokenString)
     {
-        $token = (new Token)->findByToken($tokenString);
-
-        // If we did not find a token or it is expired, let them know.
-        if (is_null($token) || $token->isExpired()) {
-            return redirect(route('auth.activation.failed', $tokenString));
-        }
-
-        // Activate the user and log them in.
-        $token->user->activate();
-
-        auth()->login($token->user);
-
-        return redirect(route('home'))
-            ->with('message', 'Your account has been activated.');
+        return $this->activation
+            ->activate($tokenString)
+            ->redirect();
     }
 
     /**
@@ -100,7 +94,7 @@ class Activation extends BaseController
 
         $pageTitle = 'Activation failed';
 
-        $token = (new Token)->findByToken($tokenString);
+        $token = $this->activation->findToken($tokenString);
 
         return view('auth.activation.failed', compact('layout', 'pageTitle', 'token'));
     }

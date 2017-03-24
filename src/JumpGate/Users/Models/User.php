@@ -16,6 +16,30 @@ use JumpGate\Users\Traits\CanResetPassword;
 use JumpGate\Users\Traits\HasTokens;
 use Kodeine\Acl\Traits\HasRole;
 
+/**
+ * Class User
+ *
+ * @package JumpGate\Users\Models
+ *
+ * @property int                                 $id
+ * @property string                              $email
+ * @property string                              $password
+ * @property int                                 $status_id
+ * @property int                                 $failed_login_attempts
+ * @property string                              $authenticated_as
+ * @property \Carbon\Carbon                      $authenticated_at
+ * @property \Carbon\Carbon                      $activated_at
+ * @property \Carbon\Carbon                      $blocked_at
+ * @property \Carbon\Carbon                      $password_updated_at
+ * @property string                              $remember_token
+ * @property \Carbon\Carbon                      $created_at
+ * @property \Carbon\Carbon                      $updated_at
+ * @property \Carbon\Carbon                      $deleted_at
+ *
+ * @property \JumpGate\Users\Models\Role[]       $roles
+ * @property \JumpGate\Users\Models\Permission[] $permissions
+ * @property \JumpGate\Users\Models\User\Detail  $details
+ */
 abstract class User extends BaseModel implements AuthenticatableContract, AuthorizableContract
 {
     /**

@@ -6,6 +6,13 @@ use JumpGate\Users\Models\User\Token;
 use JumpGate\Users\Notifications\PasswordReset;
 use JumpGate\Users\Notifications\UserActivation;
 
+/**
+ * Class HasTokens
+ *
+ * @package JumpGate\Users\Traits
+ *
+ * @property \JumpGate\Users\Models\User\Token[] $tokens
+ */
 trait HasTokens
 {
     /**

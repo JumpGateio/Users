@@ -8,6 +8,19 @@ use Carbon\Carbon;
 use JumpGate\Users\Notifications\PasswordReset;
 use JumpGate\Users\Notifications\UserActivation;
 
+/**
+ * Class Token
+ *
+ * @package JumpGate\Users\Models\User
+ *
+ * @property int              $user_id
+ * @property string           $type
+ * @property string           $token
+ * @property \Carbon\Carbon   $created_at
+ * @property \Carbon\Carbon   $updated_at
+ * @property \Carbon\Carbon   $expires_at
+ * @property \App\Models\User $user
+ */
 class Token extends BaseModel
 {
     /**
@@ -203,7 +216,7 @@ class Token extends BaseModel
     /**
      * Every token belongs to a user.
      *
-     * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return  \App\Models\User
      */
     public function user()
     {

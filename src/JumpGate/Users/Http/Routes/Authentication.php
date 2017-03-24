@@ -28,21 +28,12 @@ class Authentication extends BaseRoute implements Routes
 
     private function standardAuth(Router $router)
     {
-        // Login
         $router->get('login')
                ->name('auth.login')
-               ->uses('Authentication@login');
+               ->uses('Authentication@index');
         $router->post('login')
                ->name('auth.login')
-               ->uses('Authentication@handleLogin');
-
-        // Registering
-        $router->get('register')
-               ->name('auth.register')
-               ->uses('Authentication@register');
-        $router->post('register')
-               ->name('auth.register')
-               ->uses('Authentication@handleRegister');
+               ->uses('Authentication@handle');
     }
 
     private function socialAuth(Router $router)
