@@ -30,7 +30,7 @@ class SocialLogin
     public function __construct(User $users)
     {
         $this->users     = $users;
-        $this->providers = collect(config('users.providers'))
+        $this->providers = collect(config('jumpgate.users.providers'))
             ->keyBy('driver');
     }
 
