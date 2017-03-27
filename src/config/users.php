@@ -92,6 +92,9 @@ return [
     | allow social to be the only authentication, or exist alongside standard
     | auth.  Set the following to true to force only social logins.
     |
+    | Once you set this to true, make sure to remove any routes pointing to
+    | the non-social versions (ie auth.login and auth.register)
+    |
     */
 
     'social_auth_only' => false,
