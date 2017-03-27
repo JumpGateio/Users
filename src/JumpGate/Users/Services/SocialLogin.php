@@ -71,7 +71,7 @@ class SocialLogin
 
         // Log the user in.
         auth()->login($user, request('remember', false));
-        auth()->user()->updateLogin($this->provider->driver);
+        $user->updateLogin($this->provider->driver);
         event(new UserLoggedIn($user, $socialUser));
 
         return [
