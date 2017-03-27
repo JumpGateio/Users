@@ -24,6 +24,10 @@ class UsersServiceProvider extends ServiceProvider
         if (! class_exists('\App\Models\User')) {
             $this->addUserModel();
         }
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../../config/users.php', 'jumpgate.users'
+        );
     }
 
     /**
@@ -49,10 +53,6 @@ class UsersServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../../config/users.php' => config_path('jumpgate/users.php'),
         ]);
-
-        $this->mergeConfigFrom(
-            __DIR__ . '/../../../config/users.php', 'jumpgate.users'
-        );
     }
 
     /**
