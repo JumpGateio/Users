@@ -19,7 +19,7 @@ class CreateUsersTables extends Migration
             $table->string('password', 64);
             $table->tinyInteger('status_id')->default(2);
             $table->integer('failed_login_attempts')->default(0);
-            $table->integer('authenticated_as')->nullable();
+            $table->string('authenticated_as', 100)->nullable();
             $table->timestamp('authenticated_at')->nullable();
             $table->timestamp('activated_at')->nullable();
             $table->timestamp('blocked_at')->nullable();
