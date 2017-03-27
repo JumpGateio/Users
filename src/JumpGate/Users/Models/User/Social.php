@@ -28,7 +28,7 @@ class Social extends BaseModel
         'avatar',
         'token',
         'refresh_token',
-        'expires_in'
+        'expires_in',
     ];
 
     public function updateFromProvider(AbstractUser $socialUser, $provider)
@@ -45,7 +45,7 @@ class Social extends BaseModel
             'avatar'        => $socialUser->getAvatar(),
             'token'         => $socialUser->token,
             'refresh_token' => $refreshToken,
-            'expires_in'    => $socialUser->expiresIn,
+            'expires_in'    => isset($socialUser->expiresIn) ? $socialUser->expiresIn : null,
         ];
 
         $this->updateOrCreate(array_only($attributes, ['user_id', 'provider', 'email']), $attributes);

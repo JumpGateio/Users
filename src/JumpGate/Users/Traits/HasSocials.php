@@ -20,7 +20,7 @@ trait HasSocials
             'avatar'        => $socialUser->getAvatar(),
             'token'         => $socialUser->token,
             'refresh_token' => $refreshToken,
-            'expires_in'    => $socialUser->expiresIn,
+            'expires_in'    => isset($socialUser->expiresIn) ? $socialUser->expiresIn : null,
         ]);
     }
 
