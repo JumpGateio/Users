@@ -50,17 +50,4 @@ class SocialAuthentication extends BaseController
             ->intended(route('home'))
             ->with('message', 'You have been logged in.');
     }
-
-    /**
-     * Log the user out.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function logout()
-    {
-        auth()->logout();
-
-        return redirect(route('home'))
-            ->with('message', 'You have been logged out.');
-    }
 }
