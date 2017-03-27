@@ -80,6 +80,24 @@ class Activation extends BaseController
     }
 
     /**
+     * Display the account inactive page.
+     *
+     * @return mixed
+     */
+    public function inactive()
+    {
+        $layout = view()->exists('layouts.default')
+            ? 'layouts.default'
+            : 'layout';
+
+        $pageTitle = 'Inactive account';
+
+        $token = $this->activation->findTokenByEmail(session('inactive_email'));
+
+        return view('auth.activation.inactive', compact('layout', 'pageTitle', 'token'));
+    }
+
+    /**
      * Display the page saying that activation failed.
      *
      * @param string $tokenString The user's activation token.

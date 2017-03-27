@@ -36,6 +36,10 @@ class Activation extends BaseRoute implements Routes
                ->name('auth.activation.generate')
                ->uses('Activation@generate');
 
+        $router->get('inactive')
+               ->name('auth.activation.inactive')
+               ->uses('Activation@inactive');
+
         $router->get('re-send/{token}')
                ->name('auth.activation.resend')
                ->uses('Activation@resend');

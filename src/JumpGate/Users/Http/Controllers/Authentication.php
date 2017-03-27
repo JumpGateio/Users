@@ -36,6 +36,20 @@ class Authentication extends BaseController
     }
 
     /**
+     * Display the blocked page.
+     */
+    public function blocked()
+    {
+        $layout = view()->exists('layouts.default')
+            ? 'layouts.default'
+            : 'layout';
+
+        $pageTitle = 'Blocked';
+
+        return view('auth.blocked', compact('layout', 'pageTitle'));
+    }
+
+    /**
      * Handle validating the login details.
      *
      * @param \JumpGate\Users\Http\Requests\Login $request

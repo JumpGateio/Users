@@ -36,6 +36,10 @@ class Authentication extends BaseRoute implements Routes
         $router->post('login')
                ->name('auth.login')
                ->uses('Authentication@handle');
+
+        $router->get('blocked')
+               ->name('auth.blocked')
+               ->uses('Authentication@blocked');
     }
 
     private function socialAuth(Router $router)

@@ -19,7 +19,7 @@
                     <a href="{{ route('auth.password.reset') }}" class="btn btn-sm btn-primary">Forgot Password</a>
                   </div>
                   <div class="btn-group">
-                    <a href="{{ route('auth.activation.re-send', $token->token) }}" class="btn btn-sm btn-primary">Re-Send Activation Email</a>
+                    <a href="{{ route('auth.activation.resend', $token->token) }}" class="btn btn-sm btn-primary">Re-Send Activation Email</a>
                   </div>
                 </div>
               @else

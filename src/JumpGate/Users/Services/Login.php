@@ -3,6 +3,7 @@
 namespace JumpGate\Users\Services;
 
 use JumpGate\Core\Services\Response;
+use JumpGate\Users\Events\UserFailedLogin;
 use JumpGate\Users\Events\UserLoggedIn;
 use JumpGate\Users\Models\User;
 use JumpGate\Users\Models\User\Status;
@@ -44,8 +45,7 @@ class Login
      */
     private function handleInvalidCredentials()
     {
-        // todo - create this event
-        // event(new UserFailedLogin('password'));
+        event(new UserFailedLogin('password'));
 
         // Try to track the failed login.
         User::failedLogin(request('email'));
@@ -61,15 +61,14 @@ class Login
      */
     private function handleInactiveUser()
     {
-        // todo - create this event
-        // event(new UserFailedLogin('inactive'));
+        event(new UserFailedLogin('inactive'));
 
         // Log the user out.
+        session(['inactive_email' => auth()->user()->email]);
         auth()->logout();
 
-        // todo - change route into a page offering to resend the email
         return Response::failed('Your account is not yet activated.')
-                       ->route('auth.login');
+                       ->route('auth.activation.inactive');
     }
 
     /**
@@ -79,15 +78,13 @@ class Login
      */
     private function handleBlockedUsers()
     {
-        // todo - create this event
-        // event(new UserFailedLogin('blocked'));
+        event(new UserFailedLogin('blocked'));
 
         // Log the user out.
         auth()->logout();
 
-        // todo - change route into a page detailing that they have been blocked.
         return Response::failed('You are not allowed to access the site at this time.')
-                       ->route('auth.login');
+                       ->route('auth.blocked');
     }
 
     /**
@@ -97,8 +94,7 @@ class Login
      */
     private function handleSuccessfulLogin()
     {
-        // todo - create this event
-        event(new UserLoggedIn(auth()->user(), null));
+        event(new UserLoggedIn(auth()->user()));
 
         // Update the user with the log in details.
         auth()->user()->updateLogin();

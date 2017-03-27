@@ -54,6 +54,8 @@ class Activation
         $token = $this->findToken($tokenString);
 
         if (! is_null($token)) {
+            session()->forget('inactive_email');
+
             $token->extend();
 
             $token->notifyUser();
@@ -96,5 +98,23 @@ class Activation
     public function findToken($tokenString)
     {
         return $this->tokens->findByToken($tokenString);
+    }
+
+    /**
+     * Find a Token object by the token string.
+     *
+     * @param string $email The user's email address.
+     *
+     * @return \JumpGate\Users\Models\User\Token|null
+     */
+    public function findTokenByEmail($email)
+    {
+        $user = $this->users->where('email', $email)->first();
+
+        if (! is_null($user)) {
+            return $user->getActivationToken();
+        }
+
+        return null;
     }
 }
