@@ -3,6 +3,7 @@
 namespace JumpGate\Users\Services;
 
 use App\Models\User;
+use JumpGate\Users\Events\UserLoggedIn;
 use JumpGate\Users\Models\Social\Provider;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -34,6 +35,23 @@ class SocialLogin
     }
 
     /**
+     * Redirect the user based on the social provider being used.
+     *
+     * @param string $provider The provider being logged in through.
+     *
+     * @return mixed
+     */
+    public function redirect($provider)
+    {
+        $this->getProviderDetails($provider);
+
+        return Socialite::driver($this->provider->driver)
+                        ->scopes($this->provider->scopes)
+                        ->with($this->provider->extras)
+                        ->redirect();
+    }
+
+    /**
      * Try to log the user in and validate their status.
      *
      * @param string $provider The provider being logged in through.
@@ -44,16 +62,16 @@ class SocialLogin
     {
         $this->getProviderDetails($provider);
 
-        $socialUser = Socialite::driver($this->provider->driver)->user();
-        $user       = $this->users->where('email', $socialUser->getEmail())
-                                  ->orWhereHas('socials', function ($query) use ($socialUser) {
-                                      $query->where('email', $socialUser->getEmail())
-                                            ->where('provider', $this->provider->driver);
-                                  })->first();
+        // Get the users.
+        $socialUser = $this->getSocialUser();
+        $user       = $this->getUser($socialUser);
 
-        $user = $this->getUser($user, $socialUser);
-
+        // Update or create provider details.
         $this->updateFromProvider($user, $socialUser);
+
+        // Log the user in.
+        auth()->login($user, request('remember', false));
+        event(new UserLoggedIn($user, $socialUser));
 
         return [
             $user,
@@ -62,15 +80,31 @@ class SocialLogin
     }
 
     /**
+     * Get the social user from Socialite.
+     *
+     * @return null|\Laravel\Socialite\AbstractUser
+     */
+    protected function getSocialUser()
+    {
+        return Socialite::driver($this->provider->driver)->user();
+    }
+
+    /**
      * Make sure that we have a valid user to work with.
      *
-     * @param null|\App\Models\User                $user
      * @param null|\Laravel\Socialite\AbstractUser $socialUser
      *
      * @return \App\Models\User
      */
-    protected function getUser($user, $socialUser)
+    protected function getUser($socialUser)
     {
+        $user = $this->users
+            ->where('email', $socialUser->getEmail())
+            ->orWhereHas('socials', function ($query) use ($socialUser) {
+                $query->where('email', $socialUser->getEmail())
+                      ->where('provider', $this->provider->driver);
+            })->first();
+
         if (! is_null($user)) {
             return $user;
         }

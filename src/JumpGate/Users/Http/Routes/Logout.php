@@ -19,9 +19,11 @@ class Logout extends BaseRoute implements Routes
 
     public function routes(Router $router)
     {
-        if (config('jumpgate.users.enable_social') == false) {
+        if (config('jumpgate.users.social_auth_only') == false) {
             $this->standardAuth($router);
-        } else {
+        }
+
+        if (config('jumpgate.users.enable_social') == true) {
             $this->socialAuth($router);
         }
     }
@@ -36,7 +38,7 @@ class Logout extends BaseRoute implements Routes
     private function socialAuth(Router $router)
     {
         $router->get('logout')
-               ->name('auth.logout')
+               ->name('auth.social.logout')
                ->uses('SocialAuthentication@logout');
     }
 }

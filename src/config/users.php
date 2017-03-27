@@ -67,14 +67,13 @@ return [
     |
     | If using social authentication, specify the driver being used here.  You
     | can also specify any additional scopes or extras you need here.
-    | Setting the enable_Social flag to true will change the existing routes
-    | to their social counterparts.
+    | Setting the enable_social flag to true will add social routes.
+    |
+    | Note: You must have at least one provider or you will get an exception.
     |
     */
 
     'enable_social' => false,
-
-    'social_and_standard' => false,
 
     'providers' => [
         [
@@ -83,4 +82,17 @@ return [
             'extras' => [],
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Social Only
+    |--------------------------------------------------------------------------
+    |
+    | If using social authentication by setting enable_social to true, you can
+    | allow social to be the only authentication, or exist alongside standard
+    | auth.  Set the following to true to force only social logins.
+    |
+    */
+
+    'social_auth_only' => false,
 ];

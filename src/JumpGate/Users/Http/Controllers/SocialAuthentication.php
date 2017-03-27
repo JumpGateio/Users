@@ -5,7 +5,6 @@ namespace JumpGate\Users\Http\Controllers;
 use App\Http\Controllers\BaseController;
 use JumpGate\Users\Services\SocialLogin;
 use Laravel\Socialite\Facades\Socialite;
-use JumpGate\Users\Events\UserLoggedIn;
 
 class SocialAuthentication extends BaseController
 {
@@ -33,12 +32,7 @@ class SocialAuthentication extends BaseController
      */
     public function login($provider = null)
     {
-        $provider = $this->login->getProviderDetails($provider);
-
-        return Socialite::driver($provider->driver)
-                        ->scopes($provider->scopes)
-                        ->with($provider->extras)
-                        ->redirect();
+        return $this->login->redirect($provider);
     }
 
     /**
@@ -50,10 +44,7 @@ class SocialAuthentication extends BaseController
      */
     public function callback($provider = null)
     {
-        list($user, $socialUser) = $this->login->loginUser($provider);
-
-        auth()->login($user, request('remember', false));
-        event(new UserLoggedIn($user, $socialUser));
+        $this->login->loginUser($provider);
 
         return redirect()
             ->intended(route('home'))
