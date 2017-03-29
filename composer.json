@@ -16,9 +16,15 @@
         "laravel/framework": "^5.0",
         "jumpgate/database": "*@dev",
         "jumpgate/core": "*@dev",
-        "jumpgate/view-resolution": "*@dev",
+        "jumpgate/view-resolution": "^1.0",
         "laravelcollective/html": "^5.4",
         "kodeine/laravel-acl": "*@dev"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "0.9.*",
+        "orchestra/testbench": "~3.4",
+        "phpunit/phpunit": "~5.7"
     },
     "autoload": {
         "classmap": [
@@ -27,6 +33,7 @@
             "src/database/social_migrations"
         ],
         "psr-4": {
+            "Tests\\": "tests",
             "JumpGate\\Users\\": "src/JumpGate/Users"
         }
     },
@@ -34,15 +41,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../Users"
-        },
-        {
-            "type": "path",
             "url": "../Core"
-        },
-        {
-            "type": "path",
-            "url": "../ViewResolution"
         },
         {
             "type": "path",
