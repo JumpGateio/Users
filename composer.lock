@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "90983f8ceaf13a061fa662a11cffea36",
+    "hash": "7f6cd19b13aa807fcb35484e8055b15f",
     "content-hash": "e4c07ccd78df68cd8c48dc8e6cad6c1d",
     "packages": [
         {
@@ -163,7 +163,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Core",
-                "reference": null,
+                "reference": "5dc93959fa606c792806970bb7934fa4540b03cf",
                 "shasum": null
             },
             "require": {
@@ -218,7 +218,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Database",
-                "reference": null,
+                "reference": "015e92f9e72757e1b1249ed7355a955ffc9c7ff8",
                 "shasum": null
             },
             "require": {
@@ -237,9 +237,11 @@
                     "src/helpers.php"
                 ],
                 "psr-4": {
-                    "Tests\\": "tests",
                     "JumpGate\\Database\\": "src/JumpGate/Database"
                 }
+            },
+            "autoload-dev": {
+                "Tests\\": "tests"
             },
             "license": [
                 "MIT"
@@ -308,7 +310,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ACL",
-                "reference": null,
+                "reference": "33dfe6e95dcd90ea65264db1751ba58dcae746de",
                 "shasum": null
             },
             "require": {

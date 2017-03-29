@@ -4,12 +4,12 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Stygian",
-            "email": "stygian.warlock.v2@gmail.com"
+            "name": "Travis Blasingame",
+            "email": "tpblasingame@gmail.com"
         },
         {
-            "name": "Riddles",
-            "email": "riddles@dev-toolbox.com"
+            "name": "Brandon Hyde",
+            "email": "hyde.brandon@gmail.com"
         }
     ],
     "require": {
@@ -33,9 +33,11 @@
             "src/database/social_migrations"
         ],
         "psr-4": {
-            "Tests\\": "tests",
             "JumpGate\\Users\\": "src/JumpGate/Users"
         }
+    },
+    "autoload-dev": {
+        "Tests\\": "tests"
     },
     "minimum-stability": "dev",
     "repositories": [
