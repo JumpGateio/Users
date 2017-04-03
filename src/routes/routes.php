@@ -5,4 +5,5 @@ Route::group(['middleware' => 'web'], function () {
     require('authentication.php');
     require('forgot-password.php');
     require('logout.php');
+    require('registration.php');
 });

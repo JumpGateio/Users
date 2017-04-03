@@ -3,7 +3,7 @@
 use Illuminate\Routing\Router;
 
 Route::group(['middleware' => 'guest', 'prefix' => 'activation', 'namespace' => 'JumpGate\Users\Http\Controllers'], function (Router $router) {
-    if (config('jumpgate.users.enable_social') === false) {
+    if (config('jumpgate.users.social_auth_only') === false) {
         $router->get('sent')
                ->name('auth.activation.sent')
                ->uses('Activation@sent');
@@ -12,9 +12,13 @@ Route::group(['middleware' => 'guest', 'prefix' => 'activation', 'namespace' => 
                ->name('auth.activation.generate')
                ->uses('Activation@generate');
 
+        $router->get('inactive')
+               ->name('auth.activation.inactive')
+               ->uses('Activation@inactive');
+
         $router->get('re-send/{token}')
-               ->name('auth.activation.re-send')
-               ->uses('Activation@reSend');
+               ->name('auth.activation.resend')
+               ->uses('Activation@resend');
 
         $router->get('failed/{token}')
                ->name('auth.activation.failed')
