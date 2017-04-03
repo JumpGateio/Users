@@ -2,21 +2,26 @@
 
 namespace Tests;
 
+use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
 {
+    use DatabaseMigrations;
+
     /**
      * Setup the test environment.
      */
     public function setUp()
     {
+        $pathToFactories = realpath(dirname(__DIR__) . '/src/database/factories');
+
         parent::setUp();
 
-        // Make sure we load the view directory.
-        $this->app['view']->addLocation(__DIR__ . '/../src/views/bootstrap4');
+        $this->runDatabaseMigrations();
 
-        $this->app['router']->group([], __DIR__ . '/../src/routes/routes.php');
+        $this->withFactories($pathToFactories);
     }
 
     /**

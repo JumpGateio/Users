@@ -40,7 +40,7 @@ use Kodeine\Acl\Traits\HasRole;
  * @property \JumpGate\Users\Models\Permission[] $permissions
  * @property \JumpGate\Users\Models\User\Detail  $details
  */
-abstract class User extends BaseModel implements AuthenticatableContract, AuthorizableContract
+class User extends BaseModel implements AuthenticatableContract, AuthorizableContract
 {
     /**
      * Use this model for authentication.
