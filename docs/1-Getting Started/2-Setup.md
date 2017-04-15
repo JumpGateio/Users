@@ -52,7 +52,7 @@ Make sure you update `config/jumpgate/users.php` and set all of your details bef
 
 ```
 php artisan db:seed --class=UserStatus
-php artisan db:seed --class=Roles
+php artisan db:seed --class=UserRoles
 ```
 
 <a name="model"></a>
