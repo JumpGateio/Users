@@ -36,6 +36,10 @@ class Social extends BaseModel
         $refreshToken = isset($socialUser->refreshToken) && $socialUser->refreshToken
             ? $socialUser->refreshToken
             : null;
+        
+        $token = is_null($socialUser->token)
+            ? $provider
+            : $socialUser->token;
 
         $attributes = [
             'user_id'       => $this->user_id,
@@ -43,7 +47,7 @@ class Social extends BaseModel
             'social_id'     => $socialUser->getId(),
             'email'         => $socialUser->getEmail(),
             'avatar'        => $socialUser->getAvatar(),
-            'token'         => $socialUser->token,
+            'token'         => $token,
             'refresh_token' => $refreshToken,
             'expires_in'    => isset($socialUser->expiresIn) ? $socialUser->expiresIn : null,
         ];
