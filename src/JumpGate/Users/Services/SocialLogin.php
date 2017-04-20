@@ -79,6 +79,30 @@ class SocialLogin
             $socialUser,
         ];
     }
+    
+    /**
+     * Update a user's social details fore a given provider.
+     *
+     * @param string $provider The provider being logged in through.
+     *
+     * @return array
+     */
+    public function socialUpdate($provider)
+    {
+        $this->getProviderDetails($provider);
+
+        // Get the users.
+        $socialUser = $this->getSocialUser();
+        $user       = $this->getUser($socialUser);
+
+        // Update or create provider details.
+        $this->updateFromProvider($user, $socialUser);
+
+        return [
+            $user,
+            $socialUser,
+        ];
+    }
 
     /**
      * Get the social user from Socialite.
