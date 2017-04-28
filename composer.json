@@ -14,11 +14,10 @@
     ],
     "require": {
         "laravel/framework": "^5.0",
-        "jumpgate/database": "*@dev",
-        "jumpgate/core": "*@dev",
+        "jumpgate/core": "dev-master",
         "jumpgate/view-resolution": "^1.0",
         "laravelcollective/html": "^5.4",
-        "kodeine/laravel-acl": "*@dev"
+        "kodeine/laravel-acl": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -42,16 +41,8 @@
     "minimum-stability": "dev",
     "repositories": [
         {
-            "type": "path",
-            "url": "../Core"
-        },
-        {
-            "type": "path",
-            "url": "../Database"
-        },
-        {
-            "type": "path",
-            "url": "../ACL"
+            "type": "vcs",
+            "url": "git@github.com:JumpGateio/Core.git"
         }
     ]
 }
