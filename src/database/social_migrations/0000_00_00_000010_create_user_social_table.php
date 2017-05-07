@@ -20,8 +20,8 @@ class CreateUserSocialTable extends Migration
             $table->string('social_id')->index();
             $table->string('email')->index()->nullable();
             $table->string('avatar')->nullable();
-            $table->string('token');
-            $table->string('refresh_token')->nullable();
+            $table->text('token');
+            $table->text('refresh_token')->nullable();
             $table->integer('expires_in')->nullable();
             $table->timestamps();
 

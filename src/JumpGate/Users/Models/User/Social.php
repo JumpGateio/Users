@@ -56,6 +56,46 @@ class Social extends BaseModel
     }
 
     /**
+     * Make sure our tokens are always encrypted.
+     *
+     * @param $value
+     */
+    public function setTokenAttribute($value)
+    {
+        $this->attributes['token'] = encrypt($value);
+    }
+
+    /**
+     * Always return a valid token.
+     *
+     * @return string
+     */
+    public function getTokenAttribute()
+    {
+        return decrypt($this->attributes['token']);
+    }
+
+    /**
+     * Make sure our tokens are always encrypted.
+     *
+     * @param $value
+     */
+    public function setRefreshTokenAttribute($value)
+    {
+        $this->attributes['refresh_token'] = encrypt($value);
+    }
+
+    /**
+     * Always return a valid token.
+     *
+     * @return string
+     */
+    public function getRefreshTokenAttribute()
+    {
+        return decrypt($this->attributes['refresh_token']);
+    }
+
+    /**
      * Social details are for a specific user.
      *
      * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
