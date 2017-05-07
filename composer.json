@@ -36,7 +36,10 @@
         }
     },
     "autoload-dev": {
-        "Tests\\": "tests"
+        "psr-4": {
+            "Tests\\": "tests",
+            "App\\Models\\": "tests/resources"
+        }
     },
     "minimum-stability": "dev",
     "repositories": [

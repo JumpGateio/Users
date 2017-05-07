@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7f6cd19b13aa807fcb35484e8055b15f",
-    "content-hash": "e4c07ccd78df68cd8c48dc8e6cad6c1d",
+    "hash": "93fc36956026a8e295e3e7c4040a2c7a",
+    "content-hash": "5f2e79ece667dc7a2f4022cdd6c5a3f8",
     "packages": [
         {
             "name": "camroncade/timezone",
@@ -117,16 +117,16 @@
         },
         {
             "name": "erusev/parsedown",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
-                "reference": "20ff8bbb57205368b4b42d094642a3e52dac85fb"
+                "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/20ff8bbb57205368b4b42d094642a3e52dac85fb",
-                "reference": "20ff8bbb57205368b4b42d094642a3e52dac85fb",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/1bf24f7334fe16c88bf9d467863309ceaf285b01",
+                "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01",
                 "shasum": ""
             },
             "require": {
@@ -155,7 +155,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2016-11-02 15:56:58"
+            "time": "2017-03-29 16:04:15"
         },
         {
             "name": "jumpgate/core",
@@ -163,7 +163,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Core",
-                "reference": "5dc93959fa606c792806970bb7934fa4540b03cf",
+                "reference": null,
                 "shasum": null
             },
             "require": {
@@ -218,7 +218,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Database",
-                "reference": "015e92f9e72757e1b1249ed7355a955ffc9c7ff8",
+                "reference": null,
                 "shasum": null
             },
             "require": {
@@ -260,16 +260,16 @@
         },
         {
             "name": "jumpgate/view-resolution",
-            "version": "1.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JumpGateio/ViewResolution.git",
-                "reference": "64aa4dd37c6b82168e68373f1bd6a3d28c0d2674"
+                "reference": "802f99a2b086a76eea4eecca3b43ae0dc8783754"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JumpGateio/ViewResolution/zipball/64aa4dd37c6b82168e68373f1bd6a3d28c0d2674",
-                "reference": "64aa4dd37c6b82168e68373f1bd6a3d28c0d2674",
+                "url": "https://api.github.com/repos/JumpGateio/ViewResolution/zipball/802f99a2b086a76eea4eecca3b43ae0dc8783754",
+                "reference": "802f99a2b086a76eea4eecca3b43ae0dc8783754",
                 "shasum": ""
             },
             "require": {
@@ -287,7 +287,6 @@
                     "src/helpers.php"
                 ],
                 "psr-4": {
-                    "Tests\\": "tests",
                     "JumpGate\\ViewResolution\\": "src/JumpGate/ViewResolution"
                 }
             },
@@ -302,7 +301,7 @@
                 }
             ],
             "description": "A core set of features for laravel sites.",
-            "time": "2017-03-29 12:08:54"
+            "time": "2017-03-29 13:34:27"
         },
         {
             "name": "kodeine/laravel-acl",
@@ -310,7 +309,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ACL",
-                "reference": "33dfe6e95dcd90ea65264db1751ba58dcae746de",
+                "reference": null,
                 "shasum": null
             },
             "require": {
@@ -400,16 +399,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "dev-master",
+            "version": "5.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "330dbe7961d5fd3da4f8be2371f9f173145d9caf"
+                "reference": "d3c96686c36c0681cb01251c32f2fc3291d49c6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/330dbe7961d5fd3da4f8be2371f9f173145d9caf",
-                "reference": "330dbe7961d5fd3da4f8be2371f9f173145d9caf",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d3c96686c36c0681cb01251c32f2fc3291d49c6b",
+                "reference": "d3c96686c36c0681cb01251c32f2fc3291d49c6b",
                 "shasum": ""
             },
             "require": {
@@ -421,7 +420,8 @@
                 "monolog/monolog": "~1.11",
                 "mtdowling/cron-expression": "~1.0",
                 "nesbot/carbon": "~1.20",
-                "php": ">=7.0",
+                "paragonie/random_compat": "~1.4|~2.0",
+                "php": ">=5.6.4",
                 "ramsey/uuid": "~3.0",
                 "swiftmailer/swiftmailer": "~5.4",
                 "symfony/console": "~3.2",
@@ -471,9 +471,8 @@
                 "aws/aws-sdk-php": "~3.0",
                 "doctrine/dbal": "~2.5",
                 "mockery/mockery": "~0.9.4",
-                "orchestra/testbench-core": "3.5.*",
                 "pda/pheanstalk": "~3.0",
-                "phpunit/phpunit": "~6.0",
+                "phpunit/phpunit": "~5.7",
                 "predis/predis": "~1.0",
                 "symfony/css-selector": "~3.2",
                 "symfony/dom-crawler": "~3.2"
@@ -497,7 +496,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.5-dev"
+                    "dev-master": "5.4-dev"
                 }
             },
             "autoload": {
@@ -525,41 +524,36 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-03-28 00:38:02"
+            "time": "2017-03-30 14:26:45"
         },
         {
             "name": "laravelcollective/html",
-            "version": "dev-master",
+            "version": "5.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LaravelCollective/html.git",
-                "reference": "05373f429f2b95c28ed04b1c56534fdba356cc94"
+                "reference": "7570f25d58a00fd6909c0563808590f9cdb14d47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/05373f429f2b95c28ed04b1c56534fdba356cc94",
-                "reference": "05373f429f2b95c28ed04b1c56534fdba356cc94",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/7570f25d58a00fd6909c0563808590f9cdb14d47",
+                "reference": "7570f25d58a00fd6909c0563808590f9cdb14d47",
                 "shasum": ""
             },
             "require": {
-                "illuminate/http": "5.5.*",
-                "illuminate/routing": "5.5.*",
-                "illuminate/session": "5.5.*",
-                "illuminate/support": "5.5.*",
-                "illuminate/view": "5.5.*",
+                "illuminate/http": "5.4.*",
+                "illuminate/routing": "5.4.*",
+                "illuminate/session": "5.4.*",
+                "illuminate/support": "5.4.*",
+                "illuminate/view": "5.4.*",
                 "php": ">=5.6.4"
             },
             "require-dev": {
-                "illuminate/database": "5.5.*",
+                "illuminate/database": "5.4.*",
                 "mockery/mockery": "~0.9.4",
                 "phpunit/phpunit": "~5.4"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.5-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Collective\\Html\\": "src/"
@@ -584,7 +578,7 @@
             ],
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "http://laravelcollective.com",
-            "time": "2017-01-26 19:10:21"
+            "time": "2017-01-26 19:27:05"
         },
         {
             "name": "league/flysystem",
@@ -1145,16 +1139,16 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "dev-master",
+            "version": "3.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "54f65a2160bb98376455f29f2ddf1de676d4b8ed"
+                "reference": "a48f13dc83c168f1253a5d2a5a4fb46c36244c4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/54f65a2160bb98376455f29f2ddf1de676d4b8ed",
-                "reference": "54f65a2160bb98376455f29f2ddf1de676d4b8ed",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/a48f13dc83c168f1253a5d2a5a4fb46c36244c4c",
+                "reference": "a48f13dc83c168f1253a5d2a5a4fb46c36244c4c",
                 "shasum": ""
             },
             "require": {
@@ -1163,7 +1157,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.3-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -1194,7 +1188,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-21 10:07:34"
+            "time": "2017-02-21 09:12:04"
         },
         {
             "name": "symfony/debug",
@@ -2182,34 +2176,45 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "dev-master",
+            "version": "3.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "6dd2079621ad5df09e6283bcbef055fe5059f718"
+                "reference": "820ed3c3efc04e1f0974ac598dd9b3c56ac2b797"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/6dd2079621ad5df09e6283bcbef055fe5059f718",
-                "reference": "6dd2079621ad5df09e6283bcbef055fe5059f718",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/820ed3c3efc04e1f0974ac598dd9b3c56ac2b797",
+                "reference": "820ed3c3efc04e1f0974ac598dd9b3c56ac2b797",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "dev-master",
-                "orchestra/testbench-core": "~3.6.0"
+                "fzaninotto/faker": "~1.4",
+                "laravel/framework": "~5.4.15",
+                "php": ">=5.6.0",
+                "symfony/css-selector": "~3.2.0",
+                "symfony/dom-crawler": "~3.2.0"
             },
             "require-dev": {
                 "mockery/mockery": "^0.9.4",
-                "orchestra/database": "dev-master",
-                "phpunit/phpunit": "~6.0"
+                "orchestra/database": "~3.4.0",
+                "phpunit/phpunit": "~5.7"
             },
             "suggest": {
-                "orchestra/testbench-browser-kit": "Allow to use legacy BrowserKit for testing (~3.6)."
+                "mockery/mockery": "Allow to use Mockery for testing (^0.9.4).",
+                "orchestra/database": "Allow to use --realpath migration for testing (~3.4).",
+                "orchestra/testbench-browser-kit": "Allow to use legacy BrowserKit for testing (~3.4).",
+                "phpunit/phpunit": "Allow to use PHPUnit for testing (~5.7)."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.6-dev"
+                    "dev-master": "3.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Orchestra\\Testbench\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2233,72 +2238,7 @@
                 "orchestral",
                 "testing"
             ],
-            "time": "2017-03-21 08:48:37"
-        },
-        {
-            "name": "orchestra/testbench-core",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "9653a3aee4ed23a8a172cac464b123828e564d99"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/9653a3aee4ed23a8a172cac464b123828e564d99",
-                "reference": "9653a3aee4ed23a8a172cac464b123828e564d99",
-                "shasum": ""
-            },
-            "require": {
-                "fzaninotto/faker": "~1.4",
-                "php": ">=7.0"
-            },
-            "require-dev": {
-                "laravel/framework": "dev-master",
-                "mockery/mockery": "^0.9.4",
-                "orchestra/database": "dev-master",
-                "phpunit/phpunit": "~6.0"
-            },
-            "suggest": {
-                "laravel/framework": "Required for testing (dev-master).",
-                "mockery/mockery": "Allow to use Mockery for testing (^0.9.4).",
-                "orchestra/database": "Allow to use --realpath migration for testing (dev-master).",
-                "orchestra/testbench-browser-kit": "Allow to use legacy BrowserKit for testing (dev-master).",
-                "phpunit/phpunit": "Allow to use PHPUnit for testing (~6.0)."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Orchestra\\Testbench\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mior Muhammad Zaki",
-                    "email": "crynobone@gmail.com",
-                    "homepage": "https://github.com/crynobone"
-                }
-            ],
-            "description": "Testing Helper for Laravel Development",
-            "homepage": "http://orchestraplatform.com/docs/latest/components/testbench/",
-            "keywords": [
-                "BDD",
-                "TDD",
-                "laravel",
-                "orchestra-platform",
-                "orchestral",
-                "testing"
-            ],
-            "time": "2017-03-22 00:48:41"
+            "time": "2017-03-22 00:02:41"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -3413,6 +3353,62 @@
             "time": "2016-10-03 07:35:21"
         },
         {
+            "name": "symfony/dom-crawler",
+            "version": "3.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/dom-crawler.git",
+                "reference": "403944e294cf4ceb3b8447f54cbad88ea7b99cee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/403944e294cf4ceb3b8447f54cbad88ea7b99cee",
+                "reference": "403944e294cf4ceb3b8447f54cbad88ea7b99cee",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "symfony/css-selector": "~2.8|~3.0"
+            },
+            "suggest": {
+                "symfony/css-selector": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\DomCrawler\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DomCrawler Component",
+            "homepage": "https://symfony.com",
+            "time": "2017-02-21 09:12:04"
+        },
+        {
             "name": "symfony/yaml",
             "version": "dev-master",
             "source": {
@@ -3523,6 +3519,7 @@
     "stability-flags": {
         "jumpgate/database": 20,
         "jumpgate/core": 20,
+        "jumpgate/view-resolution": 20,
         "kodeine/laravel-acl": 20
     },
     "prefer-stable": false,
