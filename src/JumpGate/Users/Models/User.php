@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use JumpGate\Users\Models\User\Detail;
+use JumpGate\Users\Models\User\Status;
 use JumpGate\Users\Traits\CanActivate;
 use JumpGate\Users\Traits\CanAuthenticate;
 use JumpGate\Users\Traits\CanResetPassword;
@@ -138,7 +139,11 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
      * @var array
      */
     protected $dates = [
+        'activated_at',
+        'authenticated_at',
+        'blocked_at',
         'deleted_at',
+        'password_updated_at',
     ];
 
     /**
@@ -211,5 +216,15 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     public function details()
     {
         return $this->hasOne(Detail::class, 'user_id');
+    }
+
+    /**
+     * Status for a user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
     }
 }
