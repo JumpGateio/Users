@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-lg-offset-3 col-lg-6">
         <div class="panel panel-default">
-          <div class="panel-heading">
+          <div class="panel-heading background-gray-lighter">
             <strong>Password reset email sent</strong>
           </div>
           <div class="panel-body">
