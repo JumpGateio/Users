@@ -5,7 +5,7 @@
     <div class="uk-width-1-3">
       {!! Form::open(['class' => 'uk-form-horizontal']) !!}
       <div class="uk-card uk-card-default uk-padding-remove">
-        <div class="uk-card-header uk-background-gray-lighter">Login</div>
+        <div class="uk-card-header uk-background-primary-light uk-text-white">Login</div>
         <div class="uk-card-body">
 
           <div class="uk-margin">
@@ -31,43 +31,6 @@
         </div>
       </div>
       {!! Form::close() !!}
-    </div>
-  </div>
-@endsection
-
-
-@section('content')
-  <div class="container-fluid">
-    <div class="row">
-      <div class="offset-lg-3 col-lg-6">
-        <div class="panel panel-default">
-          <div class="card">
-            <div class="card-header">Login</div>
-            <div class="card-block">
-              {!! Form::open(['class' => 'form-horizontal']) !!}
-              <div class="form-group row">
-                {!! Form::label('email', 'Email', ['class' => 'col-3 col-form-label']) !!}
-                <div class="col-9">
-                  {!! Form::text('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                </div>
-              </div>
-              <div class="form-group row">
-                {!! Form::label('password', 'Password', ['class' => 'col-3 col-form-label']) !!}
-                <div class="col-9">
-                  {!! Form::password('password', ['class' => 'form-control', 'required' => 'required']) !!}
-                </div>
-              </div>
-            </div>
-            <div class="card-footer">
-              <input type="submit" value="Login" class="btn btn-primary">
-              <a href="{!! route('auth.register') !!}" class="btn btn-link">
-                Register
-              </a>
-            </div>
-            {!! Form::close() !!}
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 @endsection

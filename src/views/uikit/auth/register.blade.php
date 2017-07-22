@@ -5,7 +5,7 @@
     <div class="uk-width-1-3">
       {!! Form::open(['class' => 'uk-form-horizontal']) !!}
       <div class="uk-card uk-card-default uk-padding-remove">
-        <div class="uk-card-header uk-background-gray-lighter">Register</div>
+        <div class="uk-card-header uk-background-primary-light uk-text-white">Register</div>
         <div class="uk-card-body">
 
           <div class="uk-margin">

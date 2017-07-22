@@ -6,7 +6,7 @@
       {!! Form::open(['class' => 'uk-form-horizontal']) !!}
       {!! Form::hidden('token', $tokenString) !!}
       <div class="uk-card uk-card-default">
-        <div class="uk-card-header uk-background-gray-lighter">
+        <div class="uk-card-header uk-background-primary-light uk-text-white">
           <strong>Reset Password</strong>
         </div>
         <div class="uk-card-body">
