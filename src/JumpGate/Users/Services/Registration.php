@@ -6,6 +6,7 @@ use App\Models\User;
 use JumpGate\Users\Events\UserRegistered;
 use JumpGate\Users\Models\Social\Provider;
 use JumpGate\Users\Models\User\Detail;
+use JumpGate\Users\Models\User\Status;
 
 class Registration
 {
@@ -40,17 +41,24 @@ class Registration
         // Create the new user
         $user = $this->user->create($this->getUserFromRequest());
 
-        // If we created the user, add the extra details needed to finish them.
-        if ($user) {
-            // Add the user details.
-            $this->userDetails->create($this->getUserDetailsFromRequest($user));
-
-            // Assign the user to the default group
-            $user->assignRole(config('jumpgate.users.default_group'));
-
-            // Fire the registered event.
-            event(new UserRegistered($user));
+        if (! $user) {
+            return $user;
         }
+
+        // Add the extra details needed to finish them.
+        // Add the user details.
+        $this->userDetails->create($this->getUserDetailsFromRequest($user));
+
+        // Assign the user to the default group
+        $user->assignRole(config('jumpgate.users.default_group'));
+
+        // If we do not require activation, set the user as active.
+        if (! config('jumpgate.users.require_email_activation')) {
+            $user->setStatus(Status::ACTIVE);
+        }
+
+        // Fire the registered event.
+        event(new UserRegistered($user));
 
         return $user;
     }
@@ -68,20 +76,27 @@ class Registration
         // Create the new user
         $user = $this->user->create($this->getUserFromSocial($socialUser));
 
-        // If we created the user, add the extra details needed to finish them.
-        if ($user) {
-            // Add the user details.
-            $this->userDetails->create($this->getUserDetailsFromSocial($socialUser, $user));
-
-            // Assign the user to the default group
-            $user->assignRole(config('jumpgate.users.default_group'));
-
-            // Add the user's social account details.
-            $user->addSocial($socialUser, $provider);
-
-            // Fire the registered event.
-            event(new UserRegistered($user, $socialUser));
+        if (! $user) {
+            return $user;
         }
+
+        // Add the extra details needed to finish them.
+        // Add the user details.
+        $this->userDetails->create($this->getUserDetailsFromSocial($socialUser, $user));
+
+        // Assign the user to the default group
+        $user->assignRole(config('jumpgate.users.default_group'));
+
+        // Add the user's social account details.
+        $user->addSocial($socialUser, $provider);
+
+        // If we do not require activation, set the user as active.
+        if (! config('jumpgate.users.require_email_activation')) {
+            $user->setStatus(Status::ACTIVE);
+        }
+
+        // Fire the registered event.
+        event(new UserRegistered($user, $socialUser));
 
         return $user;
     }
