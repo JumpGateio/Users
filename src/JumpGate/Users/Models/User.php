@@ -13,6 +13,7 @@ use JumpGate\Users\Models\User\Detail;
 use JumpGate\Users\Models\User\Status;
 use JumpGate\Users\Traits\CanActivate;
 use JumpGate\Users\Traits\CanAuthenticate;
+use JumpGate\Users\Traits\CanBlock;
 use JumpGate\Users\Traits\CanResetPassword;
 use JumpGate\Users\Traits\HasTokens;
 use Kodeine\Acl\Traits\HasRole;
@@ -70,6 +71,13 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
      * @see \JumpGate\Users\Traits\CanAuthenticate
      */
     use CanAuthenticate;
+
+    /**
+     * Allow this model to be blocked or un-blocked from authenticating.
+     *
+     * @see \JumpGate\Users\Traits\CanBlock
+     */
+    use CanBlock;
 
     /**
      * Allow this model to reset it's password.

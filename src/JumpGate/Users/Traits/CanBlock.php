@@ -4,17 +4,19 @@ namespace JumpGate\Users\Traits;
 
 use JumpGate\Users\Models\User\Status;
 
-trait CanActivate
+trait CanBlock
 {
-    public function activate()
+    public function block()
     {
-        // Remove the activation token.
-        $this->getActivationToken()->delete();
-
         // Update the user table with the needed details.
-        $this->updateLogin();
-        $this->trackTime('activated_at');
+        $this->trackTime('blocked_at');
 
+        // Set the user's status to be correct.
+        $this->setStatus(Status::BLOCKED);
+    }
+
+    public function unblock()
+    {
         // Set the user's status to be correct.
         $this->setStatus(Status::ACTIVE);
     }
