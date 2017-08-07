@@ -3,6 +3,8 @@
 namespace JumpGate\Users\Services;
 
 use App\Models\User;
+use Illuminate\Support\Str;
+use JumpGate\Users\Events\UserCreated;
 use JumpGate\Users\Events\UserRegistered;
 use JumpGate\Users\Models\Social\Provider;
 use JumpGate\Users\Models\User\Detail;
@@ -97,6 +99,54 @@ class Registration
 
         // Fire the registered event.
         event(new UserRegistered($user, $socialUser));
+
+        return $user;
+    }
+
+    /**
+     * Create a new user.
+     *
+     * @param array $user
+     * @param array $roles
+     *
+     * @return bool|\JumpGate\Users\Models\User
+     */
+    public function createUser($user, $roles = [])
+    {
+        // Create the new user
+        $password = [
+            'password' => bcrypt(Str::random(10)),
+        ];
+
+        $user = array_merge($password, $user);
+        $user = $this->user->create($user);
+
+        if (! $user) {
+            return $user;
+        }
+
+        // Add the extra details needed to finish them.
+        // Add the user details.
+        $this->userDetails->create($this->getUserDetailsFromRequest($user));
+
+        // Assign the user to the default group
+        $user->syncRoles($roles);
+
+        // the user should always have the default role.
+        if (empty($roles) || $roles === '') {
+            $user->assignRole(config('jumpgate.users.default_group'));
+        }
+
+        // If we do not require activation, set the user as active.
+        if (! config('jumpgate.users.require_email_activation')) {
+            $user->setStatus(Status::ACTIVE);
+        }
+
+        // New user needs to set their password.
+        $user->generateNewUserPasswordResetToken();
+
+        // Fire the registered event.
+        event(new UserCreated($user));
 
         return $user;
     }

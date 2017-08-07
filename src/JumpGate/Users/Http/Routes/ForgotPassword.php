@@ -16,7 +16,7 @@ class ForgotPassword extends BaseRoute implements Routes
 
     public $middleware = [
         'web',
-        'guest',
+        // 'guest',
     ];
 
     public function routes(Router $router)

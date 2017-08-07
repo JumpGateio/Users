@@ -5,6 +5,7 @@ namespace JumpGate\Users\Traits;
 use JumpGate\Users\Models\User\Token;
 use JumpGate\Users\Notifications\PasswordReset;
 use JumpGate\Users\Notifications\UserActivation;
+use JumpGate\Users\Notifications\UserCreated;
 
 /**
  * Class HasTokens
@@ -43,6 +44,22 @@ trait HasTokens
         $token = app(Token::class)->generate(Token::TYPE_PASSWORD_RESET, $this, $hours);
 
         $this->notify(new PasswordReset);
+
+        return $token;
+    }
+
+    /**
+     * Generate a new password reset token for a user.
+     *
+     * @param null|int $hours
+     *
+     * @return \JumpGate\Users\Models\User\Token
+     */
+    public function generateNewUserPasswordResetToken($hours = null)
+    {
+        $token = app(Token::class)->generate(Token::TYPE_PASSWORD_RESET, $this, $hours);
+
+        $this->notify(new UserCreated);
 
         return $token;
     }
