@@ -130,7 +130,9 @@ class Registration
         $this->userDetails->create($this->getUserDetailsFromRequest($user));
 
         // Assign the user to the default group
-        $user->syncRoles($roles);
+        if (is_array($roles) || $roles instanceof Collection) {
+            $user->syncRoles($roles);
+        }
 
         // the user should always have the default role.
         if (empty($roles) || $roles === '') {
