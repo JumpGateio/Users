@@ -47,9 +47,9 @@ class SocialLogin
         $this->getProviderDetails($provider);
 
         return Socialite::driver($this->provider->driver)
-                        ->scopes($this->provider->scopes)
-                        ->with($this->provider->extras)
-                        ->redirect();
+            ->scopes($this->provider->scopes)
+            ->with($this->provider->extras)
+            ->redirect();
     }
 
     /**
@@ -63,12 +63,12 @@ class SocialLogin
     {
         $this->getProviderDetails($provider);
 
-        // Get the users.
         $socialUser = $this->getSocialUser();
-        $user       = $this->getUser($socialUser);
-        
+
         // Allow any checks before creating/updating the user.
-        event(new UserLoggingIn($user, $socialUser));
+        event(new UserLoggingIn($socialUser));
+        
+        $user = $this->getUser($socialUser);
 
         // Update or create provider details.
         $this->updateFromProvider($user, $socialUser);
@@ -83,7 +83,7 @@ class SocialLogin
             $socialUser,
         ];
     }
-    
+
     /**
      * Update a user's social details fore a given provider.
      *
@@ -128,7 +128,7 @@ class SocialLogin
             ->where('email', $socialUser->getEmail())
             ->orWhereHas('socials', function ($query) use ($socialUser) {
                 $query->where('email', $socialUser->getEmail())
-                      ->where('provider', $this->provider->driver);
+                    ->where('provider', $this->provider->driver);
             })->first();
 
         if (! is_null($user)) {
@@ -155,7 +155,7 @@ class SocialLogin
         }
 
         return $user->getProvider($this->provider->driver)
-                    ->updateFromProvider($socialUser, $this->provider->driver);
+            ->updateFromProvider($socialUser, $this->provider->driver);
     }
 
     /**
