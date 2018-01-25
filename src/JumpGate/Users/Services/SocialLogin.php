@@ -4,6 +4,7 @@ namespace JumpGate\Users\Services;
 
 use App\Models\User;
 use JumpGate\Users\Events\UserLoggedIn;
+use JumpGate\Users\Events\UserLoggingIn;
 use JumpGate\Users\Models\Social\Provider;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -65,6 +66,9 @@ class SocialLogin
         // Get the users.
         $socialUser = $this->getSocialUser();
         $user       = $this->getUser($socialUser);
+        
+        // Allow any checks before creating/updating the user.
+        event(new UserLoggingIn($user, $socialUser));
 
         // Update or create provider details.
         $this->updateFromProvider($user, $socialUser);
