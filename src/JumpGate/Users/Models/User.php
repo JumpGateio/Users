@@ -212,8 +212,15 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
      */
     public function trackTime($column)
     {
-        $this->actionTimestamps->{$column} = setTime('now');
-        $this->actionTimestamps->save();
+        $search = [
+            'user_id' => $this->id,
+        ];
+
+        $attributes = [
+            $column => setTime('now'),
+        ];
+
+        Timestamp::updateOrCreate($search, $attributes);
     }
 
     /**
