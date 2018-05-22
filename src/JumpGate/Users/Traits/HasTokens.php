@@ -6,6 +6,7 @@ use JumpGate\Users\Models\User\Token;
 use JumpGate\Users\Notifications\PasswordReset;
 use JumpGate\Users\Notifications\UserActivation;
 use JumpGate\Users\Notifications\UserCreated;
+use JumpGate\Users\Notifications\UserInvitation;
 
 /**
  * Class HasTokens
