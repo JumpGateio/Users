@@ -41,7 +41,6 @@ class SocialLogin
      * @param string $provider The provider being logged in through.
      *
      * @return mixed
-     * @throws \Exception
      */
     public function redirect($provider)
     {
@@ -59,7 +58,6 @@ class SocialLogin
      * @param string $provider The provider being logged in through.
      *
      * @return array
-     * @throws \Exception
      */
     public function loginUser($provider)
     {
@@ -92,8 +90,7 @@ class SocialLogin
      * @param string $provider The provider being logged in through.
      * @param User   $user     The user these details are for.
      *
-     * @return \Laravel\Socialite\AbstractUser|null
-     * @throws \Exception
+     * @return array
      */
     public function socialUpdate($provider, User $user)
     {

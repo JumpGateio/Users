@@ -21,6 +21,9 @@ class CreateUsersTables extends Migration
             $table->integer('failed_login_attempts')->default(0);
             $table->string('authenticated_as', 100)->nullable();
             $table->timestamp('authenticated_at')->nullable();
+            $table->timestamp('activated_at')->nullable();
+            $table->timestamp('blocked_at')->nullable();
+            $table->timestamp('password_updated_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

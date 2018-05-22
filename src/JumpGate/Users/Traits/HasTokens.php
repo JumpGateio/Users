@@ -33,22 +33,6 @@ trait HasTokens
     }
 
     /**
-     * Generate a new invitation token for a user.
-     *
-     * @param null|int $hours
-     *
-     * @return \JumpGate\Users\Models\User\Token
-     */
-    public function generateInvitationToken($hours = null)
-    {
-        $token = app(Token::class)->generate(Token::TYPE_INVITATION, $this, $hours);
-
-        $this->notify(new UserInvitation);
-
-        return $token;
-    }
-
-    /**
      * Generate a new password reset token for a user.
      *
      * @param null|int $hours
@@ -88,16 +72,6 @@ trait HasTokens
     public function getActivationToken()
     {
         return $this->tokens()->where('type', Token::TYPE_ACTIVATION)->first();
-    }
-
-    /**
-     * Get the user's current invitation token.
-     *
-     * @return \JumpGate\Users\Models\User\Token
-     */
-    public function getInvitationToken()
-    {
-        return $this->tokens()->where('type', Token::TYPE_INVITATION)->first();
     }
 
     /**

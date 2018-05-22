@@ -7,7 +7,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use JumpGate\Users\Notifications\PasswordReset;
 use JumpGate\Users\Notifications\UserActivation;
-use JumpGate\Users\Notifications\UserInvitation;
 
 /**
  * Class Token
@@ -30,13 +29,6 @@ class Token extends BaseModel
      * @var string
      */
     const TYPE_ACTIVATION = 'activation';
-
-    /**
-     * Invitation type token.
-     *
-     * @var string
-     */
-    const TYPE_INVITATION = 'invitation';
 
     /**
      * Password reset type token.
@@ -79,8 +71,6 @@ class Token extends BaseModel
      * @param string           $type
      * @param \App\Models\User $user
      * @param null|int         $hours
-     *
-     * @return $this
      */
     public function generate($type, User $user, $hours = null)
     {
@@ -120,19 +110,13 @@ class Token extends BaseModel
      */
     public function notifyUser()
     {
-        switch ($this->type) {
-            case self::TYPE_PASSWORD_RESET:
-                $event = new PasswordReset;
-                break;
-            case self::TYPE_ACTIVATION:
-                $event = new UserActivation;
-                break;
-            case self::TYPE_INVITATION:
-                $event = new UserInvitation;
-                break;
+        if ($this->type === self::TYPE_PASSWORD_RESET) {
+            $this->user->notify(new PasswordReset);
         }
 
-        $this->user->notify($event);
+        if ($this->type === self::TYPE_ACTIVATION) {
+            $this->user->notify(new UserActivation);
+        }
     }
 
     /**
@@ -177,7 +161,6 @@ class Token extends BaseModel
      * @param string $token
      *
      * @return null|\JumpGate\Users\Models\User\Token
-     * @throws \Exception
      */
     public function deleteByToken($token)
     {
@@ -233,7 +216,7 @@ class Token extends BaseModel
     /**
      * Every token belongs to a user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return  \App\Models\User
      */
     public function user()
     {

@@ -11,7 +11,6 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use JumpGate\Users\Models\User\Detail;
 use JumpGate\Users\Models\User\Status;
-use JumpGate\Users\Models\User\Timestamp;
 use JumpGate\Users\Traits\CanActivate;
 use JumpGate\Users\Traits\CanAuthenticate;
 use JumpGate\Users\Traits\CanBlock;
@@ -24,25 +23,24 @@ use Kodeine\Acl\Traits\HasRole;
  *
  * @package JumpGate\Users\Models
  *
- * @property int                                   $id
- * @property string                                $email
- * @property string                                $password
- * @property int                                   $status_id
- * @property int                                   $failed_login_attempts
- * @property string                                $authenticated_as
- * @property \Carbon\Carbon                        $authenticated_at
- * @property \Carbon\Carbon                        $activated_at
- * @property \Carbon\Carbon                        $blocked_at
- * @property \Carbon\Carbon                        $password_updated_at
- * @property string                                $remember_token
- * @property \Carbon\Carbon                        $created_at
- * @property \Carbon\Carbon                        $updated_at
- * @property \Carbon\Carbon                        $deleted_at
+ * @property int                                 $id
+ * @property string                              $email
+ * @property string                              $password
+ * @property int                                 $status_id
+ * @property int                                 $failed_login_attempts
+ * @property string                              $authenticated_as
+ * @property \Carbon\Carbon                      $authenticated_at
+ * @property \Carbon\Carbon                      $activated_at
+ * @property \Carbon\Carbon                      $blocked_at
+ * @property \Carbon\Carbon                      $password_updated_at
+ * @property string                              $remember_token
+ * @property \Carbon\Carbon                      $created_at
+ * @property \Carbon\Carbon                      $updated_at
+ * @property \Carbon\Carbon                      $deleted_at
  *
- * @property \JumpGate\Users\Models\Role[]         $roles
- * @property \JumpGate\Users\Models\Permission[]   $permissions
- * @property \JumpGate\Users\Models\User\Detail    $details
- * @property \JumpGate\Users\Models\User\Timestamp $actionTimestamps
+ * @property \JumpGate\Users\Models\Role[]       $roles
+ * @property \JumpGate\Users\Models\Permission[] $permissions
+ * @property \JumpGate\Users\Models\User\Detail  $details
  */
 class User extends BaseModel implements AuthenticatableContract, AuthorizableContract
 {
@@ -149,7 +147,9 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
      * @var array
      */
     protected $dates = [
+        'activated_at',
         'authenticated_at',
+        'blocked_at',
         'deleted_at',
         'password_updated_at',
     ];
@@ -212,8 +212,8 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
      */
     public function trackTime($column)
     {
-        $this->actionTimestamps->{$column} = setTime('now');
-        $this->actionTimestamps->save();
+        $this->{$column} = setTime('now');
+        $this->save();
     }
 
     /**
@@ -224,16 +224,6 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     public function details()
     {
         return $this->hasOne(Detail::class, 'user_id');
-    }
-
-    /**
-     * Important timestamps for a user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function actionTimestamps()
-    {
-        return $this->hasOne(Timestamp::class, 'user_id');
     }
 
     /**

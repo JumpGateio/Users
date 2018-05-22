@@ -73,7 +73,6 @@ $providers = [
     \JumpGate\Users\Http\Routes\Activation::class,
     \JumpGate\Users\Http\Routes\Authentication::class,
     \JumpGate\Users\Http\Routes\ForgotPassword::class,
-    \JumpGate\Users\Http\Routes\Invitation::class,
     \JumpGate\Users\Http\Routes\Logout::class,
 ];
 ```
