@@ -15,6 +15,7 @@ use JumpGate\Users\Models\User\Timestamp;
 use JumpGate\Users\Traits\CanActivate;
 use JumpGate\Users\Traits\CanAuthenticate;
 use JumpGate\Users\Traits\CanBlock;
+use JumpGate\Users\Traits\CanInvite;
 use JumpGate\Users\Traits\CanResetPassword;
 use JumpGate\Users\Traits\HasTokens;
 use Kodeine\Acl\Traits\HasRole;
@@ -66,6 +67,13 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
      * @see \JumpGate\Users\Traits\CanActivate
      */
     use CanActivate;
+
+    /**
+     * Allow this model to handle invites.
+     *
+     * @see \JumpGate\Users\Traits\CanInvite
+     */
+    use CanInvite;
 
     /**
      * Allow this model to handle logging in.
