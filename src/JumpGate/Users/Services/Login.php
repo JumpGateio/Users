@@ -41,7 +41,7 @@ class Login
     /**
      * Called when the user's email/password are not valid.
      *
-     * @return array
+     * @return \JumpGate\Core\Services\Response
      */
     private function handleInvalidCredentials()
     {
@@ -57,7 +57,7 @@ class Login
     /**
      * Called when the user is inactive.
      *
-     * @return array
+     * @return \JumpGate\Core\Services\Response
      */
     private function handleInactiveUser()
     {
@@ -74,7 +74,7 @@ class Login
     /**
      * Called when the user is blocked.
      *
-     * @return array
+     * @return \JumpGate\Core\Services\Response
      */
     private function handleBlockedUsers()
     {
@@ -90,7 +90,7 @@ class Login
     /**
      * Called when the user has passed all authentication checks.
      *
-     * @return array
+     * @return \JumpGate\Core\Services\Response
      */
     private function handleSuccessfulLogin()
     {

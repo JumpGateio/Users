@@ -33,6 +33,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Allow user invitations
+    |--------------------------------------------------------------------------
+    |
+    | If you want to lock down your site and allow access through invitation
+    | only, set this value to true.  It will enable routes and database
+    | columns.  Make sure you set this before running the user migrations.
+    |
+    */
+
+    'allow_invitations' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | Automatic blocking
     |--------------------------------------------------------------------------
     |
