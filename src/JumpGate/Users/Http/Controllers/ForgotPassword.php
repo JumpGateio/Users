@@ -3,8 +3,6 @@
 namespace JumpGate\Users\Http\Controllers;
 
 use App\Http\Controllers\BaseController;
-use App\Models\User;
-use JumpGate\Users\Models\User\Token;
 use JumpGate\Users\Services\ForgotPassword as ForgotPasswordService;
 
 class ForgotPassword extends BaseController

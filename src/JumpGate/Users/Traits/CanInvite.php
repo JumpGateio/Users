@@ -6,6 +6,9 @@ use JumpGate\Users\Models\User\Status;
 
 trait CanInvite
 {
+    /**
+     * Activate a user from an invitation.
+     */
     public function activateInvitation()
     {
         // Remove the invitation token.

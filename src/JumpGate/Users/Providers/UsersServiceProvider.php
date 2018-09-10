@@ -1,4 +1,6 @@
-<?php namespace JumpGate\Users\Providers;
+<?php
+
+namespace JumpGate\Users\Providers;
 
 use Config;
 use Illuminate\Support\ServiceProvider;
@@ -16,15 +18,9 @@ class UsersServiceProvider extends ServiceProvider
 
     /**
      * Register bindings in the container.
-     *
-     * @return void
      */
     public function register()
     {
-        if (! class_exists('\App\Models\User')) {
-            $this->addUserModel();
-        }
-
         $this->mergeConfigFrom(
             __DIR__ . '/../../../config/users.php', 'jumpgate.users'
         );
@@ -32,8 +28,6 @@ class UsersServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -41,24 +35,22 @@ class UsersServiceProvider extends ServiceProvider
         $this->loadMigrations();
         $this->loadViews();
         $this->loadCommands();
+        $this->loadPublishable();
     }
 
     /**
      * Load the configs.
-     *
-     * @return void
      */
     protected function loadConfigs()
     {
         $this->publishes([
             __DIR__ . '/../../../config/users.php' => config_path('jumpgate/users.php'),
+            __DIR__ . '/../../../config/acl.php'   => config_path('acl.php'),
         ]);
     }
 
     /**
      * Load the migrations.
-     *
-     * @return void
      */
     protected function loadMigrations()
     {
@@ -70,9 +62,7 @@ class UsersServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register views
-     *
-     * @return void
+     * Register views.
      */
     protected function loadViews()
     {
@@ -91,6 +81,9 @@ class UsersServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * Register commands.
+     */
     private function loadCommands()
     {
         if ($this->app->runningInConsole()) {
@@ -100,14 +93,21 @@ class UsersServiceProvider extends ServiceProvider
         }
     }
 
-    private function addUserModel()
+    /**
+     * Add any extra publishable files to the site.
+     */
+    private function loadPublishable()
     {
-        $files = app('files');
+        $publishDirectory = __DIR__ . '/../../../publish/';
 
-        if (! $files->exists(app_path('Models'))) {
-            $files->makeDirectory(app_path('Models'), 0755, true);
-        }
-
-        $files->copy(__DIR__ . '/../../../stubs/UserModel.php', app_path('Models/User.php'));
+        $this->publishes([
+            $publishDirectory . 'Commands/UserDatabase.php' => app_path('Console/Commands/JumpGate/UserDatabase.php'),
+            $publishDirectory . 'Http/Composers/Menu.php'   => app_path('Http/Composers/Menu.php'),
+            $publishDirectory . 'Http/Kernel.php'           => app_path('Http/Kernel.php'),
+            $publishDirectory . 'Models/User.php'           => app_path('Models/User.php'),
+            $publishDirectory . 'Providers/Auth.php'        => app_path('Providers/AuthServiceProvider.php'),
+            $publishDirectory . 'Providers/Event.php'       => app_path('Providers/EventServiceProvider.php'),
+            $publishDirectory . 'Providers/Route.php'       => app_path('Providers/RouteServiceProvider.php'),
+        ], 'user_template_files');
     }
 }

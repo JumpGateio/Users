@@ -6,6 +6,9 @@ use JumpGate\Users\Models\User\Status;
 
 trait CanActivate
 {
+    /**
+     * Activate a user.
+     */
     public function activate()
     {
         // Remove the activation token.

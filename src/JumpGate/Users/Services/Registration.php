@@ -5,8 +5,9 @@ namespace JumpGate\Users\Services;
 use App\Models\User;
 use Illuminate\Support\Str;
 use JumpGate\Users\Events\UserCreated;
+use JumpGate\Users\Events\UserCreating;
 use JumpGate\Users\Events\UserRegistered;
-use JumpGate\Users\Models\Social\Provider;
+use JumpGate\Users\Events\UserRegistering;
 use JumpGate\Users\Models\User\Detail;
 use JumpGate\Users\Models\User\Status;
 
@@ -47,6 +48,9 @@ class Registration
             return $user;
         }
 
+        // Fire the registering event.
+        event(new UserRegistering($user));
+
         // Add the extra details needed to finish them.
         // Add the user details.
         $this->userDetails->create($this->getUserDetailsFromRequest($user));
@@ -81,6 +85,9 @@ class Registration
         if (! $user) {
             return $user;
         }
+
+        // Fire the registering event.
+        event(new UserRegistering($user, $socialUser));
 
         // Add the extra details needed to finish them.
         // Add the user details.
@@ -125,6 +132,9 @@ class Registration
             return $user;
         }
 
+        // Fire the creating event.
+        event(new UserCreating($user));
+
         // Add the extra details needed to finish them.
         // Add the user details.
         $this->userDetails->create($this->getUserDetailsFromRequest($user));
@@ -147,7 +157,7 @@ class Registration
         // New user needs to set their password.
         $user->generateNewUserPasswordResetToken();
 
-        // Fire the registered event.
+        // Fire the created event.
         event(new UserCreated($user));
 
         return $user;
@@ -187,11 +197,26 @@ class Registration
         return array_filter($details);
     }
 
+    /**
+     * Get a possible user email from the social object.
+     *
+     * @param $socialUser
+     *
+     * @return array
+     */
     private function getUserFromSocial($socialUser)
     {
         return ['email' => $socialUser->getEmail()];
     }
 
+    /**
+     * Try to get as many details as possible from the social user object.
+     *
+     * @param $socialUser
+     * @param $user
+     *
+     * @return array
+     */
     private function getUserDetailsFromSocial($socialUser, $user)
     {
         $names    = explode(' ', $socialUser->getName());

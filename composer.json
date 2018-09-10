@@ -14,16 +14,16 @@
     ],
     "require": {
         "laravel/framework": "^5.0",
-        "jumpgate/core": "dev-master",
+        "jumpgate/core": "~1.0",
         "jumpgate/view-resolution": "^1.0",
-        "laravelcollective/html": "^5.4",
-        "kodeine/laravel-acl": "dev-master"
+        "laravelcollective/html": "^5.7",
+        "kodeine/laravel-acl": "dev-master#6c9d73e"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "orchestra/testbench": "~3.4",
-        "phpunit/phpunit": "~5.7"
+        "mockery/mockery": "~1.0",
+        "phpunit/phpunit": "~7.0",
+        "orchestra/testbench": "~3.7"
     },
     "autoload": {
         "classmap": [
@@ -41,11 +41,13 @@
             "App\\Models\\": "tests/resources"
         }
     },
-    "minimum-stability": "dev",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:JumpGateio/Core.git"
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JumpGate\\Users\\Providers\\UsersServiceProvider",
+                "Kodeine\\Acl\\AclServiceProvider"
+            ]
         }
-    ]
+    },
+    "minimum-stability": "dev"
 }
