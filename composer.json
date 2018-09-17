@@ -15,7 +15,7 @@
     "require": {
         "laravel/framework": "^5.0",
         "jumpgate/core": "~1.0",
-        "jumpgate/view-resolution": "^1.0",
+        "jumpgate/view-resolution": "^2.0",
         "laravelcollective/html": "^5.7",
         "kodeine/laravel-acl": "dev-master#6c9d73e"
     },
