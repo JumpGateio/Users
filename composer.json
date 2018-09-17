@@ -48,6 +48,5 @@
                 "Kodeine\\Acl\\AclServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
