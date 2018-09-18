@@ -42,5 +42,10 @@ class Users extends BaseRoute implements Routes
             ->name('admin.users.delete')
             ->uses('Users@delete')
             ->middleware('active:admin.users.delete');
+
+        $router->get('data-table')
+            ->name('admin.users.data-table')
+            ->uses('Users@dataTable')
+            ->middleware('active:admin.users.data-table');
     }
 }

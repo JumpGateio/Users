@@ -25,6 +25,10 @@ class RouteServiceProvider extends ServiceProvider
     protected $providers = [
         \App\Http\Routes\Home::class,
 
+        \App\Services\Admin\Http\Routes\Index::class,
+        \App\Services\Admin\Http\Routes\Artisan::class,
+        \App\Services\Admin\Http\Routes\Users::class,
+
         \JumpGate\Users\Http\Routes\Activation::class,
         \JumpGate\Users\Http\Routes\Authentication::class,
         \JumpGate\Users\Http\Routes\ForgotPassword::class,
@@ -117,11 +121,25 @@ class RouteServiceProvider extends ServiceProvider
         foreach ($this->providers as $provider) {
             $provider = new $provider;
 
-            $router->group([
+            if (! $provider instanceof Routes) {
+                continue;
+            }
+
+            $attributes = [
                 'prefix'     => $provider->getPrefix(),
                 'namespace'  => $provider->getNamespace(),
                 'middleware' => $provider->getMiddleware(),
-            ], function ($router) use ($provider) {
+            ];
+
+            if (! is_null($provider->getRole())) {
+                $attributes['is'] = $provider->getRole();
+            }
+
+            if (! is_null($provider->getPermissions())) {
+                $attributes['can'] = $provider->getPermissions();
+            }
+
+            $router->group($attributes, function ($router) use ($provider) {
                 $provider->routes($router);
             });
         }

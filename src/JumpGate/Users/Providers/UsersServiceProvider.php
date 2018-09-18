@@ -71,12 +71,9 @@ class UsersServiceProvider extends ServiceProvider
 
             $this->app['view']->addLocation($viewPath);
 
-            $this->loadViewsFrom($viewPath . '/auth', 'jumpgate.users.auth');
-            $this->loadViewsFrom($viewPath . '/admin/user', 'jumpgate.users.admin');
-
             $this->publishes([
-                $viewPath . '/auth'       => resource_path('views/vendor/auth'),
-                $viewPath . '/admin/user' => resource_path('views/vendor/admin/user'),
+                $viewPath . '/auth'   => resource_path('views/vendor/auth'),
+                $viewPath . '/admin/' => resource_path('views/vendor/admin/'),
             ]);
         }
     }
@@ -103,9 +100,11 @@ class UsersServiceProvider extends ServiceProvider
         $this->publishes([
             $publishDirectory . 'Commands/UserDatabase.php' => app_path('Console/Commands/JumpGate/UserDatabase.php'),
             $publishDirectory . 'Http/Composers/Menu.php'   => app_path('Http/Composers/Menu.php'),
+            $publishDirectory . 'Http/Composers/Admin.php'  => app_path('Http/Composers/AdminSidebar.php'),
             $publishDirectory . 'Http/Kernel.php'           => app_path('Http/Kernel.php'),
             $publishDirectory . 'Models/User.php'           => app_path('Models/User.php'),
             $publishDirectory . 'Providers/Auth.php'        => app_path('Providers/AuthServiceProvider.php'),
+            $publishDirectory . 'Providers/Composer.php'    => app_path('Providers/ComposerServiceProvider.php'),
             $publishDirectory . 'Providers/Event.php'       => app_path('Providers/EventServiceProvider.php'),
             $publishDirectory . 'Providers/Route.php'       => app_path('Providers/RouteServiceProvider.php'),
             $publishDirectory . 'Services/'                 => app_path('Services/'),

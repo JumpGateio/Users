@@ -6,16 +6,22 @@ class UserRoles extends Seeder
 {
     public function run()
     {
+        $this->addRoleIfNotExists('guest', 'Guest', 'Default user role.');
+        $this->addRoleIfNotExists('admin', 'Admin', 'Site administrator.');
+    }
+
+    protected function addRoleIfNotExists($slug, $name, $description)
+    {
         $existingRole = $this->db
             ->table('rbac_roles')
-            ->where('slug', 'guest')
+            ->where('slug', $slug)
             ->first();
 
         if (is_null($existingRole)) {
             $role = [
-                'name'        => 'Guest',
-                'slug'        => 'guest',
-                'description' => 'Default user role.',
+                'name'        => $name,
+                'slug'        => $slug,
+                'description' => $description,
                 'created_at'  => date('Y-m-d H:i:s'),
             ];
 

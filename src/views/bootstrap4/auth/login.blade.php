@@ -5,9 +5,9 @@
     <div class="row">
       <div class="offset-lg-3 col-lg-6">
         <div class="card">
+          {!! Form::open() !!}
           <div class="card-header">Login</div>
           <div class="card-body">
-            {!! Form::open() !!}
             <div class="form-group row">
               {!! Form::label('email', 'Email', ['class' => 'col-3 col-form-label']) !!}
               <div class="col-9">

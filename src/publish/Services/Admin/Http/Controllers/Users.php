@@ -3,6 +3,7 @@
 namespace App\Services\Admin\Http\Controllers;
 
 use App\Models\User;
+use Freshbitsweb\Laratables\Laratables;
 use JumpGate\Users\Services\Registration;
 
 class Users extends Base
@@ -49,5 +50,10 @@ class Users extends Base
         return redirect()
             ->route('admin.users.index')
             ->with('message', 'User deleted!');
+    }
+
+    public function dataTable()
+    {
+        return Laratables::recordsOf(User::class);
     }
 }
