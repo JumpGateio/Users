@@ -6,7 +6,7 @@
       <div class="offset-lg-3 col-lg-6">
         <div class="card">
           <div class="card-header">Register</div>
-          <div class="card-block">
+          <div class="card-body">
             {!! Form::open(['class' => 'form-horizontal']) !!}
             <div class="form-group row">
               {!! Form::label('email', 'Email', ['class' => 'col-3 col-form-label']) !!}

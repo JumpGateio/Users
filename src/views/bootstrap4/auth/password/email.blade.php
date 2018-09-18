@@ -8,7 +8,7 @@
           <div class="card-header">
             <strong>Reset Password</strong>
           </div>
-          <div class="card-block">
+          <div class="card-body">
             {!! Form::open(['class' => 'form-horizontal']) !!}
             <div class="form-group row{{ $errors->has('email') ? ' has-error' : '' }}">
               <label for="email" class="col-3 col-form-label">E-Mail Address</label>

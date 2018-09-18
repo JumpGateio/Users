@@ -2,14 +2,10 @@
 
 namespace App\Services\Admin\Http\Controllers;
 
-use App\Services\Admin\Commands\Index as AdminIndex;
-
 class Index extends Base
 {
-    public function __invoke(AdminIndex $manager)
+    public function __invoke()
     {
-        $this->setViewData($manager->load());
-
         return $this->view();
     }
 }

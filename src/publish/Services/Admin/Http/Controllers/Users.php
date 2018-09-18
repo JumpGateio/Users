@@ -3,6 +3,7 @@
 namespace App\Services\Admin\Http\Controllers;
 
 use App\Models\User;
+use JumpGate\Users\Services\Registration;
 
 class Users extends Base
 {
@@ -32,9 +33,9 @@ class Users extends Base
         return $this->view();
     }
 
-    public function store()
+    public function store(Registration $registration)
     {
-        $this->users->inviteNewUser(request('email'), 'guest');
+        $registration->createUser(request()->all(), 'guest');
 
         return redirect()
             ->route('admin.users.index')
