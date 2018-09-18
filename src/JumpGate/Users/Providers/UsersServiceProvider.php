@@ -101,13 +101,16 @@ class UsersServiceProvider extends ServiceProvider
         $publishDirectory = __DIR__ . '/../../../publish/';
 
         $this->publishes([
-            $publishDirectory . 'Commands/UserDatabase.php' => app_path('Console/Commands/JumpGate/UserDatabase.php'),
-            $publishDirectory . 'Http/Composers/Menu.php'   => app_path('Http/Composers/Menu.php'),
-            $publishDirectory . 'Http/Kernel.php'           => app_path('Http/Kernel.php'),
-            $publishDirectory . 'Models/User.php'           => app_path('Models/User.php'),
-            $publishDirectory . 'Providers/Auth.php'        => app_path('Providers/AuthServiceProvider.php'),
-            $publishDirectory . 'Providers/Event.php'       => app_path('Providers/EventServiceProvider.php'),
-            $publishDirectory . 'Providers/Route.php'       => app_path('Providers/RouteServiceProvider.php'),
+            $publishDirectory . 'Commands/UserDatabase.php'       => app_path('Console/Commands/JumpGate/UserDatabase.php'),
+            $publishDirectory . 'Http/Composers/AdminSidebar.php' => app_path('Http/Composers/AdminSideBar.php'),
+            $publishDirectory . 'Http/Composers/Menu.php'         => app_path('Http/Composers/Menu.php'),
+            $publishDirectory . 'Http/Kernel.php'                 => app_path('Http/Kernel.php'),
+            $publishDirectory . 'Models/User.php'                 => app_path('Models/User.php'),
+            $publishDirectory . 'Providers/Auth.php'              => app_path('Providers/AuthServiceProvider.php'),
+            $publishDirectory . 'Providers/Composer.php'          => app_path('Providers/ComposerServiceProvider.php'),
+            $publishDirectory . 'Providers/Event.php'             => app_path('Providers/EventServiceProvider.php'),
+            $publishDirectory . 'Providers/Route.php'             => app_path('Providers/RouteServiceProvider.php'),
+            $publishDirectory . 'Services/Admin/'                 => app_path('Services/'),
         ], 'user_template_files');
     }
 }
