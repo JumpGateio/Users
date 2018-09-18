@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\JumpGate;
 
 use Illuminate\Console\Command;
 use JumpGate\Users\Models\Role;
