@@ -75,6 +75,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Routing
+    |--------------------------------------------------------------------------
+    |
+    | when redirecting a user to login, we don't know which route to send
+    | them to.  This lets us know what route to aim for.
+    |
+    */
+
+    'default_route' => [
+        'name'    => 'auth.login',
+        'options' => [],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Social Authentication Details
     |--------------------------------------------------------------------------
     |
