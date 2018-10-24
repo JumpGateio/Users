@@ -110,7 +110,7 @@ class UsersServiceProvider extends ServiceProvider
             $publishDirectory . 'Providers/Composer.php'          => app_path('Providers/ComposerServiceProvider.php'),
             $publishDirectory . 'Providers/Event.php'             => app_path('Providers/EventServiceProvider.php'),
             $publishDirectory . 'Services/Admin/'                 => app_path('Services/'),
-            $publishDirectory . 'config/'                         => base_path('config/'),
+            $publishDirectory . 'config/route.php'                => base_path('config/route.php'),
         ], 'user_template_files');
     }
 }
