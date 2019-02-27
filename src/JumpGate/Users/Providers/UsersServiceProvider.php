@@ -72,11 +72,11 @@ class UsersServiceProvider extends ServiceProvider
             $this->app['view']->addLocation($viewPath);
 
             $this->loadViewsFrom($viewPath . '/auth', 'jumpgate.users.auth');
-            $this->loadViewsFrom($viewPath . '/admin/user', 'jumpgate.users.admin');
+            $this->loadViewsFrom($viewPath . '/admin', 'jumpgate.users.admin');
 
             $this->publishes([
-                $viewPath . '/auth'       => resource_path('views/vendor/auth'),
-                $viewPath . '/admin/user' => resource_path('views/vendor/admin/user'),
+                $viewPath . '/auth'  => resource_path('views/vendor/auth'),
+                $viewPath . '/admin' => resource_path('views/vendor/admin'),
             ]);
         }
     }
