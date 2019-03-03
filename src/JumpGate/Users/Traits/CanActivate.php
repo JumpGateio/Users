@@ -21,4 +21,24 @@ trait CanActivate
         // Set the user's status to be correct.
         $this->setStatus(Status::ACTIVE);
     }
+
+    /**
+     * Determine if this user is currently active.
+     *
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->status_id === Status::ACTIVE;
+    }
+
+    /**
+     * Determine if this user is currently inactive.
+     *
+     * @return bool
+     */
+    public function isInactive()
+    {
+        return $this->status_id === Status::INACTIVE;
+    }
 }

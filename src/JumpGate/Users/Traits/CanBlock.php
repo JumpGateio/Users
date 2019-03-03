@@ -11,7 +11,7 @@ trait CanBlock
      */
     public function block()
     {
-        // Update the user table with the needed details.
+        // Update the user times table with the needed details.
         $this->trackTime('blocked_at');
 
         // Set the user's status to be correct.
@@ -25,5 +25,15 @@ trait CanBlock
     {
         // Set the user's status to be correct.
         $this->setStatus(Status::ACTIVE);
+    }
+
+    /**
+     * Determine if this user is currently blocked.
+     *
+     * @return bool
+     */
+    public function isBlocked()
+    {
+        return $this->status_id === Status::BLOCKED;
     }
 }
