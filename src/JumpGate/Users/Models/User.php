@@ -17,6 +17,7 @@ use JumpGate\Users\Traits\CanAuthenticate;
 use JumpGate\Users\Traits\CanBlock;
 use JumpGate\Users\Traits\CanInvite;
 use JumpGate\Users\Traits\CanResetPassword;
+use JumpGate\Users\Traits\HasGravatar;
 use JumpGate\Users\Traits\HasTokens;
 use Kodeine\Acl\Traits\HasRole;
 
@@ -109,6 +110,13 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
      * @see \JumpGate\Users\Traits\HasTokens
      */
     use HasTokens;
+
+    /**
+     * Allow this model to display a gravatar avatar.
+     *
+     * @see \JumpGate\Users\Traits\HasGravatar
+     */
+    use HasGravatar;
 
     /**
      * Allow this model to receive notifications.
