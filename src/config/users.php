@@ -8,15 +8,10 @@ return [
     |
     | JumpGate Users comes with some default view files to make getting started
     | quicker.  If you don't want these to load, set this value to false.
-    | You can also set your framework value below.  This can be one of
-    | the following frameworks.
-    | bootstrap3, bootstrap4
     |
     */
 
     'load_views' => true,
-
-    'css_framework' => env('CSS_FRAMEWORK', 'bootstrap4'),
 
     /*
     |--------------------------------------------------------------------------
