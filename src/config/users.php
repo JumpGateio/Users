@@ -51,14 +51,15 @@ return [
     |
     | While you can manually block a user by calling the block() method, you
     | may often want to automate some blocking rules.  You can do this below.
-    | Each entry must contain what is being checked, the operator and the value.
+    | Each entry must contain what column is being checked and the value.
+    | Set any column this to zero to disable that specific rule.
     |
     | Available checks: failed_login_attempts
     |
     */
 
     'blocking' => [
-        ['failed_login_attempts', '>=', 10],
+        'failed_login_attempts' => 10,
     ],
 
     /*

@@ -14,6 +14,14 @@ trait CanActivate
         // Remove the activation token.
         $this->getActivationToken()->delete();
 
+        $this->updateActivationDetails();
+    }
+
+    /**
+     * Update a users activation details.
+     */
+    public function updateActivationDetails()
+    {
         // Update the user table with the needed details.
         $this->updateLogin();
         $this->trackTime('activated_at');

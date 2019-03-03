@@ -21,6 +21,8 @@ trait CanAuthenticate
      * When a log in fails, increment the failed count.
      *
      * @param string $email The email the user tried to log in as.
+     *
+     * @return bool
      */
     public static function failedLogin($email)
     {
@@ -29,5 +31,24 @@ trait CanAuthenticate
         if (! is_null($user)) {
             $user->increment('failed_login_attempts');
         }
+
+        $rules = config('jumpgate.users.blocking', null);
+
+        if (is_null($rules)) {
+            return true;
+        }
+
+        supportCollector($rules)
+            ->each(function ($limit, $column) use ($user) {
+                if ($limit === 0) {
+                    return true;
+                }
+
+                $attempts = $user->{$column};
+
+                if ($attempts >= $limit) {
+                    $user->blocked();
+                }
+            });
     }
 }

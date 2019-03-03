@@ -101,7 +101,7 @@ class Registration
 
         // If we do not require activation, set the user as active.
         if (! config('jumpgate.users.require_email_activation')) {
-            $user->setStatus(Status::ACTIVE);
+            $user->updateActivationDetails();
         }
 
         // Fire the registered event.
@@ -151,7 +151,7 @@ class Registration
 
         // If we do not require activation, set the user as active.
         if (! config('jumpgate.users.require_email_activation')) {
-            $user->setStatus(Status::ACTIVE);
+            $user->updateActivationDetails();
         }
 
         // New user needs to set their password.
