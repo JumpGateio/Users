@@ -35,6 +35,30 @@ trait HasSocials
     }
 
     /**
+     * Create a user to allow access.
+     *
+     * @param string                             $email
+     * @param collection|object|array|string|int $roles
+     *
+     * @return \App\Models\User
+     */
+    public function generateSocialOnlyUser($email, $roles)
+    {
+        $user = static::firstOrCreate(compact('email'));
+
+        $user->setStatus(Status::ACTIVE);
+        $user->assignRole($roles);
+        $user->trackTime('invited_at');
+
+        Detail::firstOrCreate([
+            'user_id'      => $user->id,
+            'display_name' => $email,
+        ]);
+
+        return $user;
+    }
+
+    /**
      * Get the user's details for a social provider
      * if they exist.
      *

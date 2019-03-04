@@ -3,6 +3,7 @@
 namespace JumpGate\Users\Traits;
 
 use JumpGate\Users\Models\User\Status;
+use JumpGate\Users\Services\Activation;
 
 trait CanActivate
 {
@@ -15,6 +16,31 @@ trait CanActivate
         $this->getActivationToken()->delete();
 
         $this->updateActivationDetails();
+    }
+
+    /**
+     * Invite a user.
+     *
+     * @param string                             $email
+     * @param collection|object|array|string|int $roles
+     *
+     * @return \App\Models\User
+     */
+    public function sendNewUserActivation($email, $roles)
+    {
+        $user = static::firstOrCreate(compact('email'));
+        $user->assignRole($roles);
+
+        /** @var Activation $invites */
+        $invites = app(Activation::class);
+        $invites->generateToken($user->id);
+
+        Detail::firstOrCreate([
+            'user_id'      => $user->id,
+            'display_name' => $email,
+        ]);
+
+        return $user;
     }
 
     /**

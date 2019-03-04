@@ -76,16 +76,24 @@ class Activation
         // If we could not find a token or it has expired, fail the attempt.
         if (is_null($token) || $token->isExpired()) {
             return Response::failed('Activation failed.')
-                           ->route('auth.activation.failed', $tokenString);
+                ->route('auth.activation.failed', $tokenString);
         }
 
         // Activate the user and log them in.
         $token->user->activate();
 
+        // Send them to set their password if this site uses passwords.
+        if (! config('jumpgate.users.social_auth_only')) {
+            $token->user->generatePasswordResetToken();
+
+            return Response::passed('Your account has been activated.  Please set your new password.')
+                ->route('auth.password.confirm');
+        }
+
         auth()->login($token->user);
 
         return Response::passed('Your account has been activated.')
-                       ->route('home');
+            ->route('home');
     }
 
     /**

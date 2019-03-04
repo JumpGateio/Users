@@ -27,5 +27,15 @@ class AdminSidebar
             $link->name = 'Artisan';
             $link->url  = route('admin.artisan.index');
         });
+        $menu->dropDown('admin.users', 'Users', function (DropDown $dropDown) {
+            $dropDown->link('admin.users.index', function (Link $link) {
+                $link->name = 'List Users';
+                $link->url  = route('admin.users.index');
+            });
+            $dropDown->link('admin.users.create', function (Link $link) {
+                $link->name = 'Add User';
+                $link->url  = route('admin.users.create');
+            });
+        });
     }
 }

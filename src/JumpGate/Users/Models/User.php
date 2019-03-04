@@ -233,6 +233,17 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     }
 
     /**
+     * Set the user's failed login attempts.
+     *
+     * @param int $attempts The number of attempts to set it to.
+     */
+    public function setFailedLoginAttempts($attempts)
+    {
+        $this->failed_login_attempts = $attempts;
+        $this->save();
+    }
+
+    /**
      * Track when something important happened.
      *
      * @param string              $column The column being updated.

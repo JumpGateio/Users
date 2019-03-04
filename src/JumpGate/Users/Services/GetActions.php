@@ -75,7 +75,9 @@ class GetActions
      */
     protected function checkInvites()
     {
-        if (is_null($this->user->actionTimestamps->invited_at)) {
+        if (! config('jumpgate.users.settings.allow_invitations')
+            || is_null($this->user->actionTimestamps->invited_at)
+        ) {
             return true;
         }
 
