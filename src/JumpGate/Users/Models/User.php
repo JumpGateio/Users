@@ -211,6 +211,17 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     }
 
     /**
+     * Returns a list of objects that will go in a users
+     * drop down menu for actions that can be taken.
+     *
+     * @return \JumpGate\Database\Collections\SupportCollection
+     */
+    public function getAdminActionsAttribute()
+    {
+        return (new GetActions($this))->build();
+    }
+
+    /**
      * Set the user's status.
      *
      * @param int $status The ID of the status being set.
@@ -224,9 +235,10 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     /**
      * Track when something important happened.
      *
-     * @param string $column The column being updated.
+     * @param string              $column The column being updated.
+     * @param null|\Carbon\Carbon $time   The time to set the token for.
      */
-    public function trackTime($column)
+    public function trackTime($column, $time = null)
     {
         $search = [
             'user_id' => $this->id,

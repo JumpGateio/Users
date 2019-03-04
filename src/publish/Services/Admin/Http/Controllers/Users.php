@@ -3,6 +3,7 @@
 namespace App\Services\Admin\Http\Controllers;
 
 use App\Models\User;
+use JumpGate\Users\Services\UserActions;
 
 class Users extends Base
 {
@@ -27,30 +28,42 @@ class Users extends Base
         return $this->view();
     }
 
-    public function block($id)
+    public function confirm($id, $status, $action = null)
     {
-        $this->users->find($id)->block();
+        $user = $this->users->withTrashed()->find($id);
 
-        return redirect()
-            ->route('admin.users.index')
-            ->with('message', 'User blocked!');
+        switch ($status) {
+            case 'resendInvite':
+                $event = 'resend an invite to';
+                break;
+            case 'revokeInvite':
+                $event = 'revoke the invite to';
+                break;
+            case 'resetPassword':
+                $event = 'reset the password of ';
+                break;
+            default:
+                $event = $status;
+                break;
+        }
+
+        if (! is_null($action) && (int)$action === 0) {
+            $event = 'un-' . $event;
+        }
+
+        $message = 'You are about to ' . $event . ' ' . $user->email . '.';
+
+        $this->setViewData(compact('message'));
+
+        return $this->view();
     }
 
-    public function unblock($id)
+    public function confirmed($id, $status, $action = null)
     {
-        $this->users->find($id)->unblock();
+        $user = $this->users->withTrashed()->find($id);
 
-        return redirect()
-            ->route('admin.users.index')
-            ->with('message', 'User un-blocked!');
-    }
-
-    public function delete($id)
-    {
-        $this->users->destroy($id);
-
-        return redirect()
-            ->route('admin.users.index')
-            ->with('message', 'User deleted!');
+        return (new UserActions($user, $status, $action))
+            ->execute()
+            ->redirect();
     }
 }

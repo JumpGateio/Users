@@ -21,4 +21,24 @@ trait CanInvite
         // Set the user's status to be correct.
         $this->setStatus(Status::ACTIVE);
     }
+
+    /**
+     * Resend an invitation to the user.
+     */
+    public function resendInvite()
+    {
+        $token = $this->getInvitationToken();
+
+        $token->extend();
+        $token->notifyUser();
+    }
+
+    /**
+     * Remove the invite for the user.
+     */
+    public function revokeToken()
+    {
+        // Remove the invitation token.
+        $this->getInvitationToken()->delete();
+    }
 }

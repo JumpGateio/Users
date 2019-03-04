@@ -15,29 +15,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Require email activation
+    | Available settings
     |--------------------------------------------------------------------------
     |
-    | When a user signs up you can require them to verify their email to activate
-    | their account.  This is on by default, but you can turn it off by setting
-    | the below value to false.
+    | Here you can configure the users package with a few available settings.
+    | If you set registration to false, then email activation will also be
+    | considered false.
     |
     */
 
-    'require_email_activation' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Allow user invitations
-    |--------------------------------------------------------------------------
-    |
-    | If you want to lock down your site and allow access through invitation
-    | only, set this value to true.  It will enable routes and database
-    | columns.  Make sure you set this before running the user migrations.
-    |
-    */
-
-    'allow_invitations' => false,
+    'settings' => [
+        'require_email_activation' => false,
+        'allow_registration'       => false,
+        'allow_invitations'        => false,
+    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -57,9 +57,7 @@ class Invitation
         if (! is_null($token)) {
             session()->forget('inactive_email');
 
-            $token->extend();
-
-            $token->notifyUser();
+            $token->user->resendInvite();
         }
     }
 
