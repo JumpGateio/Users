@@ -25,8 +25,18 @@ return [
     */
 
     'settings' => [
+        // This will send out an email for the user to activate.
         'require_email_activation' => false,
+
+        // If this is disabled, users will not be able to register on the site at all.
+        // The route and  menu link will be removed.  The LoggingIn and Registering
+        // events will also check this and force it to not work.  To add a user
+        // when registration is disabled, you will have to add them through
+        // the admin panel.  They can only log in if the user exists.
         'allow_registration'       => false,
+
+        // This will give you the option in the admin dashboard to send
+        // user an invitation to the site through email.
         'allow_invitations'        => false,
     ],
 
@@ -65,8 +75,9 @@ return [
     | Routing
     |--------------------------------------------------------------------------
     |
-    | when redirecting a user to login, we don't know which route to send
-    | them to.  This lets us know what route to aim for.
+    | When redirecting a user to login, we don't know which route to send
+    | them to.  This lets us know what route to aim for.  If using
+    | social auth, set this to auth.social.login.
     |
     */
 
@@ -109,6 +120,8 @@ return [
     |
     | Once you set this to true, make sure to remove any routes pointing to
     | the non-social versions (ie auth.login and auth.register)
+    |
+    | NOTE: Setting this to true does not disable registration.
     |
     */
 
