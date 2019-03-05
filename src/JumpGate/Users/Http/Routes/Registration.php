@@ -19,9 +19,15 @@ class Registration extends BaseRoute implements Routes
 
     public function routes(Router $router)
     {
-        if (config('jumpgate.users.social_auth_only') === false) {
-            $this->standardAuth($router);
+        // Social auth doesn't allow for registration.
+        // Also, if the site has disabled registration, don't register these routes.
+        if (config('jumpgate.users.social_auth_only')
+            || ! config('jumpgate.users.settings.allow_registration')
+        ) {
+            return true;
         }
+
+        $this->standardAuth($router);
     }
 
     private function standardAuth(Router $router)

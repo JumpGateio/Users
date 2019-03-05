@@ -20,9 +20,13 @@ class EventServiceProvider extends ServiceProvider
         \JumpGate\Users\Events\UserCreating::class    => [],
         \JumpGate\Users\Events\UserCreated::class     => [],
         \JumpGate\Users\Events\UserFailedLogin::class => [],
-        \JumpGate\Users\Events\UserLoggingIn::class   => [],
+        \JumpGate\Users\Events\UserLoggingIn::class   => [
+            \JumpGate\Users\Listeners\BlockIfRegistrationDisabled::class,
+        ],
         \JumpGate\Users\Events\UserLoggedIn::class    => [],
-        \JumpGate\Users\Events\UserRegistering::class => [],
+        \JumpGate\Users\Events\UserRegistering::class => [
+            \JumpGate\Users\Listeners\BlockIfRegistrationDisabled::class,
+        ],
         \JumpGate\Users\Events\UserRegistered::class  => [],
     ];
 
@@ -34,7 +38,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
         //
     }
 }
