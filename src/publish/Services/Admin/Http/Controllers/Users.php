@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Http\Controllers;
 
-use App\Commands\User\UserActions;
+use JumpGate\Users\Services\UserActions;
 use App\Models\User;
 use JumpGate\Users\Models\Role;
 use JumpGate\Users\Models\User\Status;

@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use JumpGate\Users\Models\User\Detail;
 use JumpGate\Users\Models\User\Status;
 use JumpGate\Users\Models\User\Timestamp;
+use JumpGate\Users\Services\GetActions;
 use JumpGate\Users\Traits\CanActivate;
 use JumpGate\Users\Traits\CanAuthenticate;
 use JumpGate\Users\Traits\CanBlock;
