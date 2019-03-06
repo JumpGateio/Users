@@ -27,35 +27,7 @@
           </td>
           <td>{{ $user->role_list }}</td>
           <td class="text-right">
-            <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar with button groups">
-              @if ($user->trashed())
-                <a href="{{ route('admin.users.confirm', [$user->id, 'delete', 0]) }}" class="btn btn-sm btn-outline-danger">
-                  Restore
-                </a>
-              @else
-                <div class="btn-group mr-2">
-                  <button type="button" class="btn btn-sm btn-outline-dark dropdown-toggle"
-                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Actions
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right">
-                    @foreach ($user->adminActions as $action)
-                      <a href="{{ $action->route }}" class="dropdown-item p-2">
-                        <i class="fa {{ $action->icon }} text-500"></i>&nbsp;&nbsp;{{ $action->text }}
-                      </a>
-                    @endforeach
-                  </div>
-                </div>
-                <div class="btn-group">
-                  <a href="{{ route('admin.users.edit', [$user->id]) }}" class="btn btn-sm btn-outline-purple">
-                    Edit
-                  </a>
-                  <a href="{{ route('admin.users.confirm', [$user->id, 'delete', 1]) }}" class="btn btn-sm btn-outline-danger">
-                    Delete
-                  </a>
-                </div>
-              @endif
-            </div>
+            @include('admin.partials.users.actions')
           </td>
         </tr>
       @empty
