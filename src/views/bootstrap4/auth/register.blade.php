@@ -35,7 +35,7 @@
           </div>
           <div class="card-footer">
             <input type="submit" value="Register" class="btn btn-primary">
-            <a href="{!! route('auth.login') !!}" class="btn btn-link">
+            <a href="{{ Route::has('auth.login') ? route('auth.login') : route('auth.social.login') }}" class="btn btn-link">
               Login
             </a>
           </div>
