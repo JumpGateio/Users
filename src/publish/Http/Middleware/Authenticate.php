@@ -14,8 +14,8 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        list('name' => $route, 'options' => $options) = config('jumpgate.users.default_route');
+        $route = config('jumpgate.users.default_route');
 
-        return route($route, $options);
+        return route($route['name'], $route['options']);
     }
 }
