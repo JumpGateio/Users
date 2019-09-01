@@ -24,9 +24,11 @@
             </div>
             <div class="card-footer">
               <input type="submit" value="Login" class="btn btn-primary">
-              <a href="{!! route('auth.register') !!}" class="btn btn-link">
-                Register
-              </a>
+              @if (Route::has('auth.register'))
+                <a href="{!! route('auth.register') !!}" class="btn btn-link">
+                  Register
+                </a>
+              @endif
             </div>
             {!! Form::close() !!}
           </div>
