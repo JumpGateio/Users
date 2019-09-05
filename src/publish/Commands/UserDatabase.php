@@ -44,7 +44,7 @@ class UserDatabase extends Command
     {
         $updated = $this->confirm('Have you updated your config/jumpgate/users.php config?');
 
-        if (! $updated) {
+        if (!$updated) {
             $this->comment('Please update your config/jumpgate/users.php config.');
             die;
         }
@@ -55,13 +55,11 @@ class UserDatabase extends Command
      */
     private function verifyMigrated()
     {
-        $process = new Process('php artisan migrate:status');
-        $process->run();
+        $this->comment('Running migrate command...');
 
-        if (strpos($process->getOutput(), 'No migrations found') !== false) {
-            $this->comment('Running migrate command...');
-            $this->call('migrate');
-        }
+        $this->call('laratrust:migration', ['--no-interaction']);
+
+        $this->call('migrate');
     }
 
     /**
@@ -78,7 +76,7 @@ class UserDatabase extends Command
 
         if (Role::count() === 0) {
             $this->comment('Seeding rbac_roles...');
-            $this->call('db:seed', ['--class' => 'UserRoles']);
+            $this->call('db:seed', ['--class' => 'LaratrustSeeder']);
         } else {
             $this->comment('Table rbac_roles is not empty.  Skipping seed...');
         }

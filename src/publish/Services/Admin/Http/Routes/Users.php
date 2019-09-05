@@ -19,7 +19,7 @@ class Users extends BaseRoute implements Routes
     public $middleware = [
         'web',
         'auth',
-        'acl',
+        'role:admin',
     ];
 
     public function routes(Router $router)

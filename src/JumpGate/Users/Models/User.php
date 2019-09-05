@@ -20,7 +20,7 @@ use JumpGate\Users\Traits\CanInvite;
 use JumpGate\Users\Traits\CanResetPassword;
 use JumpGate\Users\Traits\HasGravatar;
 use JumpGate\Users\Traits\HasTokens;
-use Kodeine\Acl\Traits\HasRole;
+use Laratrust\Traits\LaratrustUserTrait;
 
 /**
  * Class User
@@ -55,13 +55,6 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
      * @see \Illuminate\Auth\Authenticatable
      */
     use Authenticatable;
-
-    /**
-     * Allow this model to use authorization.
-     *
-     * @see \Illuminate\Foundation\Auth\Access\Authorizable
-     */
-    use Authorizable;
 
     /**
      * Allow this model to handle being activated.
@@ -101,9 +94,9 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     /**
      * Allow this model to have roles and permissions.
      *
-     * @see \Kodeine\Acl\Traits\HasRole
+     * @see \Laratrust\Traits\LaratrustUserTrait
      */
-    use HasRole;
+    use LaratrustUserTrait;
 
     /**
      * Allow this model to generate and use tokens.

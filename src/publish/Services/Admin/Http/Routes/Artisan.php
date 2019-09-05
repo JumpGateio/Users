@@ -18,8 +18,8 @@ class Artisan extends BaseRoute implements Routes
 
     public $middleware = [
         'web',
-        // 'auth',
-        // 'acl',
+        'auth',
+        'role:admin',
     ];
 
     public function routes(Router $router)

@@ -17,13 +17,13 @@
         "jumpgate/core": "~2.0",
         "jumpgate/view-resolution": "^3.0",
         "laravelcollective/html": "^6.0",
-        "kodeine/laravel-acl": "dev-master#6c9d73e"
+        "santigarcor/laratrust": "^5.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0",
-        "phpunit/phpunit": "~7.0",
-        "orchestra/testbench": "~3.7"
+        "phpunit/phpunit": "~8.0",
+        "orchestra/testbench": "^4.0"
     },
     "autoload": {
         "classmap": [
@@ -44,8 +44,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "JumpGate\\Users\\Providers\\UsersServiceProvider",
-                "Kodeine\\Acl\\AclServiceProvider"
+                "JumpGate\\Users\\Providers\\UsersServiceProvider"
             ]
         }
     }

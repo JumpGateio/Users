@@ -44,8 +44,9 @@ class UsersServiceProvider extends ServiceProvider
     protected function loadConfigs()
     {
         $this->publishes([
-            __DIR__ . '/../../../config/users.php' => config_path('jumpgate/users.php'),
-            __DIR__ . '/../../../config/acl.php'   => config_path('acl.php'),
+            __DIR__ . '/../../../config/users.php'            => config_path('jumpgate/users.php'),
+            __DIR__ . '/../../../config/laratrust.php'        => config_path('laratrust.php'),
+            __DIR__ . '/../../../config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
         ]);
     }
 
@@ -105,9 +106,7 @@ class UsersServiceProvider extends ServiceProvider
             $publishDirectory . 'Http/Composers/AdminSidebar.php'  => app_path('Http/Composers/AdminSideBar.php'),
             $publishDirectory . 'Http/Composers/Menu.php'          => app_path('Http/Composers/Menu.php'),
             $publishDirectory . 'Http/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
-            $publishDirectory . 'Http/Kernel.php'                  => app_path('Http/Kernel.php'),
             $publishDirectory . 'Models/User.php'                  => app_path('Models/User.php'),
-            $publishDirectory . 'Providers/Auth.php'               => app_path('Providers/AuthServiceProvider.php'),
             $publishDirectory . 'Providers/Composer.php'           => app_path('Providers/ComposerServiceProvider.php'),
             $publishDirectory . 'Providers/Event.php'              => app_path('Providers/EventServiceProvider.php'),
             $publishDirectory . 'Services/Admin/'                  => app_path('Services/Admin/'),
