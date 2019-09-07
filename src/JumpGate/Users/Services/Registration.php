@@ -56,7 +56,7 @@ class Registration
         $this->userDetails->create($this->getUserDetailsFromRequest($user));
 
         // Assign the user to the default group
-        $user->assignRole(config('jumpgate.users.default_role'));
+        $user->attachRole(config('jumpgate.users.default_role'));
 
         // If we do not require activation, set the user as active.
         if (! config('jumpgate.users.require_email_activation')) {
@@ -94,7 +94,7 @@ class Registration
         $this->userDetails->create($this->getUserDetailsFromSocial($socialUser, $user));
 
         // Assign the user to the default group
-        $user->assignRole(config('jumpgate.users.default_role'));
+        $user->attachRole(config('jumpgate.users.default_role'));
 
         // Add the user's social account details.
         $user->addSocial($socialUser, $provider);
@@ -146,7 +146,7 @@ class Registration
 
         // the user should always have the default role.
         if (empty($roles) || $roles === '') {
-            $user->assignRole(config('jumpgate.users.default_role'));
+            $user->attachRole(config('jumpgate.users.default_role'));
         }
 
         // If we do not require activation, set the user as active.
