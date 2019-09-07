@@ -8,7 +8,7 @@
           <div class="card-header">
             <strong>Reset Password</strong>
           </div>
-          <div class="card-block">
+          <div class="card-body pb-0">
             {!! Form::open(['class' => 'form-horizontal']) !!}
             {!! Form::hidden('token', $tokenString) !!}
 
