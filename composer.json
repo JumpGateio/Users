@@ -13,10 +13,10 @@
         }
     ],
     "require": {
-        "laravel/framework": "^6.0",
-        "jumpgate/core": "~2.0",
-        "jumpgate/view-resolution": "^3.0",
-        "laravelcollective/html": "^6.0",
+        "laravel/framework": "^8.0",
+        "jumpgate/core": "~3.0",
+        "jumpgate/view-resolution": "^4.0",
+        "laravelcollective/html": "^6.2",
         "santigarcor/laratrust": "^5.2"
     },
     "require-dev": {
