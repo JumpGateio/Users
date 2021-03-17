@@ -2,7 +2,7 @@
 
 namespace JumpGate\Users\Http\Controllers;
 
-use JumpGate\Core\Http\Controllers\BaseController;
+use App\Http\Controllers\BaseController;
 use JumpGate\Users\Services\Invitation as InvitationService;
 
 class Invitation extends BaseController
@@ -31,7 +31,7 @@ class Invitation extends BaseController
     {
         $this->invitation->generateToken($userId);
 
-        return redirect(route('auth.invitation.sent'));
+        return redirect()->route('auth.invitation.sent');
     }
 
     /**
@@ -46,7 +46,7 @@ class Invitation extends BaseController
     {
         $this->invitation->resend($tokenString);
 
-        return redirect(route('auth.invitation.sent'));
+        return redirect()->route('auth.invitation.sent');
     }
 
     /**
@@ -71,13 +71,12 @@ class Invitation extends BaseController
      */
     public function sent()
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Email sent';
 
-        return view('auth.invitation.sent', compact('layout', 'pageTitle'));
+        return $this->response(
+            compact('pageTitle'),
+            'auth.invitation.sent'
+        );
     }
 
     /**
@@ -87,15 +86,14 @@ class Invitation extends BaseController
      */
     public function inactive()
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Inactive account';
 
         $token = $this->invitation->findTokenByEmail(session('inactive_email'));
 
-        return view('auth.invitation.inactive', compact('layout', 'pageTitle', 'token'));
+        return $this->response(
+            compact('pageTitle', 'token'),
+            'auth.invitation.inactive'
+        );
     }
 
     /**
@@ -107,14 +105,13 @@ class Invitation extends BaseController
      */
     public function failed($tokenString)
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Invite failed';
 
         $token = $this->invitation->findToken($tokenString);
 
-        return view('auth.invitation.failed', compact('layout', 'pageTitle', 'token'));
+        return $this->response(
+            compact('pageTitle', 'token'),
+            'auth.invitation.failed'
+        );
     }
 }

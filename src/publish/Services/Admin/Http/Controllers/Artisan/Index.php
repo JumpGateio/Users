@@ -59,9 +59,10 @@ class Index extends Base
             })
             ->sortBy('name');
 
-        $this->setJavascriptData(compact('commands'));
-
-        return $this->view();
+        return $this->response(
+            compact('commands'),
+            'Admin/Artisan/Index'
+        );
     }
 
     protected function getArgumentLevel(InputArgument $argument)

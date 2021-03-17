@@ -9,7 +9,7 @@ trait CanResetPassword
      *
      * @param $password
      */
-    public function resetPassword($password)
+    public function resetPassword($password = null)
     {
         // Remove the activation token.
         $this->getPasswordResetToken()->delete();

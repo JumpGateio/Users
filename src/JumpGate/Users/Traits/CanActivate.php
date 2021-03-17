@@ -29,7 +29,7 @@ trait CanActivate
     public function sendNewUserActivation($email, $roles)
     {
         $user = static::firstOrCreate(compact('email'));
-        $user->assignRole($roles);
+        $user->attachRole($roles);
 
         /** @var Activation $invites */
         $invites = app(Activation::class);

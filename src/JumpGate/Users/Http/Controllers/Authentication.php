@@ -2,7 +2,7 @@
 
 namespace JumpGate\Users\Http\Controllers;
 
-use JumpGate\Core\Http\Controllers\BaseController;
+use App\Http\Controllers\BaseController;
 use JumpGate\Users\Http\Requests\Login;
 use JumpGate\Users\Services\Login as LoginService;
 
@@ -26,13 +26,12 @@ class Authentication extends BaseController
      */
     public function index()
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Login';
 
-        return view('auth.login', compact('layout', 'pageTitle'));
+        return $this->response(
+            compact('pageTitle'),
+            'auth.login'
+        );
     }
 
     /**
@@ -40,13 +39,12 @@ class Authentication extends BaseController
      */
     public function blocked()
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Blocked';
 
-        return view('auth.blocked', compact('layout', 'pageTitle'));
+        return $this->response(
+            compact('pageTitle'),
+            'auth.blocked'
+        );
     }
 
     /**
@@ -79,7 +77,8 @@ class Authentication extends BaseController
     {
         auth()->logout();
 
-        return redirect(route('home'))
+        return redirect()
+            ->route('home')
             ->with('message', 'You have been logged out.');
     }
 }

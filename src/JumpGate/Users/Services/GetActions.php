@@ -76,12 +76,12 @@ class GetActions
     protected function checkInvites()
     {
         if (! config('jumpgate.users.settings.allow_invitations')
-            || is_null($this->user->actionTimestamps->invited_at)
+            || is_null($this->user->actionTimestamps->invited_at ?? null)
         ) {
             return true;
         }
 
-        return $this->addAction('Re-Send Invite', 'envelope-o', $this->makeRoute('resendInvite'));
+        $this->addAction('Re-Send Invite', 'envelope-o', $this->makeRoute('resendInvite'));
 
         return $this->addAction('Revoke Invite', 'times-circle-o', $this->makeRoute('revokeInvite'));
     }

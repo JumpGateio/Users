@@ -65,6 +65,15 @@ class Token extends BaseModel
     ];
 
     /**
+     * Getters we need access to at all times.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'isExpired',
+    ];
+
+    /**
      * The attributes that should be mutated to Carbon dates.
      *
      * @var array
@@ -89,10 +98,22 @@ class Token extends BaseModel
         $user_id    = $user->id;
         $email      = $user->getAuthIdentifier();
         $value      = str_shuffle(sha1($email . $type . spl_object_hash($this) . microtime(true)));
-        $token      = hash_hmac('sha256', $value, config('app.key'));
+        $token      = self::makeToken($value);
         $expires_at = Carbon::now()->addHours($hours);
 
         return $this->create(compact('user_id', 'type', 'token', 'expires_at'));
+    }
+
+    /**
+     * Create a unique token.
+     * 
+     * @param $value
+     *
+     * @return string
+     */
+    public static function makeToken($value)
+    {
+        return hash_hmac('sha256', $value, config('app.key'));
     }
 
     /**

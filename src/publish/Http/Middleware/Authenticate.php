@@ -16,6 +16,8 @@ class Authenticate extends Middleware
     {
         $route = config('jumpgate.users.default_route');
 
-        return route($route['name'], $route['options']);
+        if (! $request->expectsJson()) {
+            return route($route['name'], $route['options']);
+        }
     }
 }

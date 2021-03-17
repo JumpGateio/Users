@@ -28,9 +28,11 @@ trait CanAuthenticate
     {
         $user = self::where('email', $email)->first();
 
-        if (! is_null($user)) {
-            $user->increment('failed_login_attempts');
+        if (is_null($user)) {
+            return false;
         }
+
+        $user->increment('failed_login_attempts');
 
         $rules = config('jumpgate.users.blocking', null);
 

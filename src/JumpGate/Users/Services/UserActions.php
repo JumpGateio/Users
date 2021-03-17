@@ -59,7 +59,7 @@ class UserActions
             'block'         => ['unblock', 'block'],
             'delete'        => ['restore', 'delete'],
             'activate'      => ['activate'],
-            'resetPassword' => ['resetPassword'],
+            'resetPassword' => ['generateNewUserPasswordResetToken'],
             'resendInvite'  => ['resendInvite'],
             'revokeInvite'  => ['revokeInvite'],
         ];

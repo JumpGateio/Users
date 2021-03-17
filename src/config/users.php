@@ -3,15 +3,19 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Load Views
+    | Load Views/Inertia
     |--------------------------------------------------------------------------
     |
     | JumpGate Users comes with some default view files to make getting started
-    | quicker.  If you don't want these to load, set this value to false.
+    | quicker.  To have the files loaded in for you, set the value to true.
+    | Use the drive to switch between:
+    |
+    | blade, inertia
     |
     */
 
-    'load_views' => true,
+    'driver'     => env('USER_DRIVER', 'inertia'),
+    'load_files' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -103,9 +107,14 @@ return [
 
     'providers' => [
         [
-            'driver' => null,
-            'scopes' => [],
-            'extras' => [],
+            'driver' => 'google',
+            'scopes' => [
+                'https://www.googleapis.com/auth/userinfo.email',
+            ],
+            'extras' => [
+                'approval_prompt' => 'auto',
+                'access_type'     => 'offline',
+            ],
         ],
     ],
 

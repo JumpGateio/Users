@@ -28,5 +28,10 @@ class Index extends BaseRoute implements Routes
             ->name('admin.index')
             ->uses('Index')
             ->middleware('active:admin.dashboard');
+
+        $router->get('/tiles/users')
+            ->name('admin.index.users')
+            ->uses('Index@users')
+            ->middleware('active:admin.dashboard');
     }
 }

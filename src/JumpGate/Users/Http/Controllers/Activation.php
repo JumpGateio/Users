@@ -2,7 +2,7 @@
 
 namespace JumpGate\Users\Http\Controllers;
 
-use JumpGate\Core\Http\Controllers\BaseController;
+use App\Http\Controllers\BaseController;
 use JumpGate\Users\Services\Activation as ActivationService;
 
 class Activation extends BaseController
@@ -31,7 +31,7 @@ class Activation extends BaseController
     {
         $this->activation->generateToken($userId);
 
-        return redirect(route('auth.activation.sent'));
+        return redirect()->route('auth.activation.sent');
     }
 
     /**
@@ -46,7 +46,7 @@ class Activation extends BaseController
     {
         $this->activation->resend($tokenString);
 
-        return redirect(route('auth.activation.sent'));
+        return redirect()->route('auth.activation.sent');
     }
 
     /**
@@ -70,13 +70,12 @@ class Activation extends BaseController
      */
     public function sent()
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Email sent';
 
-        return view('auth.activation.sent', compact('layout', 'pageTitle'));
+        return $this->response(
+            compact('pageTitle'),
+            'auth.activation.sent'
+        );
     }
 
     /**
@@ -86,15 +85,14 @@ class Activation extends BaseController
      */
     public function inactive()
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Inactive account';
 
         $token = $this->activation->findTokenByEmail(session('inactive_email'));
 
-        return view('auth.activation.inactive', compact('layout', 'pageTitle', 'token'));
+        return $this->response(
+            compact('pageTitle', 'token'),
+            'auth.activation.inactive'
+        );
     }
 
     /**
@@ -106,14 +104,13 @@ class Activation extends BaseController
      */
     public function failed($tokenString)
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Activation failed';
 
         $token = $this->activation->findToken($tokenString);
 
-        return view('auth.activation.failed', compact('layout', 'pageTitle', 'token'));
+        return $this->response(
+            compact('pageTitle', 'token'),
+            'auth.activation.failed'
+        );
     }
 }

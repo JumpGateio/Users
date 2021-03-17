@@ -11,45 +11,51 @@ class Menu
     /**
      * Bind data to the view.
      *
-     * @param  View $view
+     * @param View $view
      *
      * @return void
      */
     public function compose(View $view)
     {
-        $this->generateLeftMenu();
-        $this->generateRightMenu();
+        $this::getMenus();
+    }
+
+    public static function getMenus()
+    {
+        self::generateLeftMenu();
+        self::generateRightMenu();
     }
 
     /**
      * Adds items to the menu that appears on the left side of the main menu.
      */
-    private function generateLeftMenu()
+    public static function generateLeftMenu()
     {
         $leftMenu = \Menu::getMenu('leftMenu');
 
-        /**
-         * TODO: Larecipe is not updated to 6.0
-         *
-         * @link https://github.com/saleem-hadad/larecipe/pull/157
-         */
-        //$leftMenu->link('docs', function (Link $link) {
-        //    $link->name = 'Documentation';
-        //    $link->url  = route('larecipe.index');
-        //});
+        $leftMenu->link('docs', function (Link $link) {
+            $link->name    = 'Documentation';
+            $link->url     = route('larecipe.index');
+            $link->inertia = false;
+        });
+
+        return $leftMenu;
     }
 
     /**
      * Adds items to the menu that appears on the right side of the main menu.
      */
-    private function generateRightMenu()
+    public static function generateRightMenu()
     {
         $rightMenu = \Menu::getMenu('rightMenu');
 
         if (auth()->guest()) {
             $rightMenu->link('login', function (Link $link) {
                 $link->name = 'Login';
-                $link->url  = route('auth.login');
+                $link->url  = route(
+                    config('jumpgate.users.default_route.name'),
+                    config('jumpgate.users.default_route.options')
+                );
             });
 
             // Don't show a link if we don't allow registration.
@@ -69,5 +75,7 @@ class Menu
                 });
             });
         }
+
+        return $rightMenu;
     }
 }

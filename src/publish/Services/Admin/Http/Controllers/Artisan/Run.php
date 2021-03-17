@@ -13,14 +13,14 @@ class Run extends Base
             $artisanCommand = $this->buildCommand();
             $commands       = ['cd ../', $artisanCommand];
 
-            $process = new Process(implode(' && ', $commands));
+            $process = Process::fromShellCommandline(implode(' && ', $commands));
             $process->run();
 
             $result = $process->getOutput();
 
             return response()->json($result);
         } catch (\Exception $exception) {
-            return response()->json(['message' => $exception->getMessage()], 500);
+            return response()->json(['message' => $exception->getLine()], 500);
         }
     }
 
@@ -38,8 +38,20 @@ class Run extends Base
 
         supportCollector($command->passables)
             ->map(function ($passable) use (&$result) {
+                if ($passable->type == 'flag' && ! $passable->value) {
+                    return null;
+                }
+
                 if ($passable->type === 'flag') {
                     return $result->push('--' . $passable->name);
+                }
+
+                if ($passable->mode === 'option' && is_array($passable->value) && empty($passable->value)) {
+                    return null;
+                }
+
+                if ($passable->mode === 'option' && is_array($passable->value) && ! empty($passable->value)) {
+                    return $result->push('--' . $passable->name . '=' . implode(',', $passable->value));
                 }
 
                 if ($passable->mode === 'option' && ! is_null($passable->value)) {
@@ -49,7 +61,8 @@ class Run extends Base
                 if ($passable->mode === 'argument' && ! is_null($passable->value)) {
                     return $result->push($passable->value);
                 }
-            });
+            })
+            ->filter();
 
         return $result->implode(' ');
     }

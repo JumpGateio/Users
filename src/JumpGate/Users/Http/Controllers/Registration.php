@@ -2,7 +2,7 @@
 
 namespace JumpGate\Users\Http\Controllers;
 
-use JumpGate\Core\Http\Controllers\BaseController;
+use App\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\DB;
 use JumpGate\Users\Http\Requests\Registration as RegistrationRequest;
 use JumpGate\Users\Services\Registration as RegistrationService;
@@ -27,13 +27,12 @@ class Registration extends BaseController
      */
     public function index()
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Register';
 
-        return view('auth.register', compact('layout', 'pageTitle'));
+        return $this->response(
+            compact('pageTitle'),
+            'auth.register'
+        );
     }
 
     /**
@@ -55,7 +54,7 @@ class Registration extends BaseController
 
             logger()->error($exception);
 
-            return redirect(route('auth.register'))
+            return redirect()->route('auth.register')
                 ->with('errors', $exception->getMessage());
         }
 
@@ -63,13 +62,14 @@ class Registration extends BaseController
 
         // If the app requires activation, generate a token and email them.
         if (config('jumpgate.users.require_email_activation')) {
-            return redirect(route('auth.activation.generate', $user->id));
+            return redirect()->route('auth.activation.generate', $user->id);
         }
 
         // Log the user in.
         auth()->login($user);
 
-        return redirect(route('home'))
+        return redirect()
+            ->route('home')
             ->with('message', 'Your account has been created.');
     }
 }

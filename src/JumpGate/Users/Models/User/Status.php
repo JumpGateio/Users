@@ -20,9 +20,33 @@ class Status extends BaseModel
     protected $table = 'user_statuses';
 
     /**
+     * Determines whether Laravel tries to updated created/updated times.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that can be safely filled.
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'label',
+    ];
+
+    /**
+     * A scope to help easily search statuses by a term.
+     *
+     * @param Builder $query The current query to append to
+     * @param array   $filters
+     */
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('label', 'like', '%' . $search . '%');
+        });
+    }
 }

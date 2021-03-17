@@ -27,13 +27,12 @@ class ForgotPassword extends BaseController
      */
     public function reset()
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Password Reset';
 
-        return view('auth.password.email', compact('layout', 'pageTitle'));
+        return $this->response(
+            compact('pageTitle'),
+            'auth.password.email'
+        );
     }
 
     /**
@@ -48,7 +47,7 @@ class ForgotPassword extends BaseController
         // Attempt to send the email.
         $this->forgotPassword->sendEmail(request('email'));
 
-        return redirect(route('auth.password.sent'));
+        return redirect()->route('auth.password.sent');
     }
 
     /**
@@ -58,13 +57,12 @@ class ForgotPassword extends BaseController
      */
     public function sent()
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Email sent';
 
-        return view('auth.password.sent', compact('layout', 'pageTitle'));
+        return $this->response(
+            compact('pageTitle'),
+            'auth.password.sent'
+        );
     }
 
     /**
@@ -76,13 +74,12 @@ class ForgotPassword extends BaseController
      */
     public function confirm($tokenString)
     {
-        $layout = view()->exists('layouts.default')
-            ? 'layouts.default'
-            : 'layout';
-
         $pageTitle = 'Set your new password';
 
-        return view('auth.password.reset', compact('layout', 'pageTitle', 'tokenString'));
+        return $this->response(
+            compact('pageTitle', 'tokenString'),
+            'auth.password.reset'
+        );
     }
 
     /**

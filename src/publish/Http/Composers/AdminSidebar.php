@@ -11,11 +11,21 @@ class AdminSidebar
     /**
      * Bind data to the view.
      *
-     * @param  View $view
+     * @param View $view
      *
      * @return void
      */
     public function compose(View $view)
+    {
+        $this::getMenus();
+    }
+
+    public static function getMenus()
+    {
+        self::generateMenu();
+    }
+
+    public static function generateMenu()
     {
         $menu = \Menu::getMenu('adminMenu');
 
@@ -32,10 +42,12 @@ class AdminSidebar
                 $link->name = 'List Users';
                 $link->url  = route('admin.users.index');
             });
-            $dropDown->link('admin.users.create', function (Link $link) {
-                $link->name = 'Add User';
-                $link->url  = route('admin.users.create');
+            $dropDown->link('admin.users.status.index', function (Link $link) {
+                $link->name = 'List Statuses';
+                $link->url  = route('admin.users.status.index');
             });
         });
+
+        return $menu;
     }
 }

@@ -47,7 +47,7 @@ use Laratrust\Traits\LaratrustUserTrait;
  * @property \JumpGate\Users\Models\User\Detail    $details
  * @property \JumpGate\Users\Models\User\Timestamp $actionTimestamps
  */
-class User extends BaseModel implements AuthenticatableContract, AuthorizableContract
+class User extends BaseModel implements \Illuminate\Contracts\Auth\Authenticatable
 {
     /**
      * Use this model for authentication.
@@ -165,6 +165,31 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     ];
 
     /**
+     * A common shrinking of the necessary data for the front end.
+     *
+     * @return array
+     */
+    public function frontEndDetails()
+    {
+        return [
+            'id'            => $this->id,
+            'email'         => $this->email,
+            'status'        => $this->status->label,
+            'roles'         => $this->roles->display_name->implode(', '),
+            'admin_actions' => $this->admin_actions,
+            'deleted_at'    => $this->deleted_at,
+            'details'       => $this->details ? [
+                'first_name'   => $this->details->first_name,
+                'middle_name'  => $this->details->middle_name,
+                'last_name'    => $this->details->last_name,
+                'display_name' => $this->details->display_name,
+                'timezone'     => $this->details->timezone,
+                'location'     => $this->details->location,
+            ] : [],
+        ];
+    }
+
+    /**
      * Order by name ascending scope
      *
      * @param Builder $query The current query to append to
@@ -174,6 +199,61 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     public function scopeOrderByNameAsc($query)
     {
         return $query->orderBy('email', 'asc');
+    }
+
+    /**
+     * A scope to help easily search users by a term.
+     *
+     * @param Builder $query The current query to append to
+     * @param array   $filters
+     */
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('email', 'like', '%' . $search . '%')
+                    ->orWhereHas('details', function ($query) use ($search) {
+                        $query->where('first_name', 'like', '%' . $search . '%')
+                            ->orWhere('middle_name', 'like', '%' . $search . '%')
+                            ->orWhere('last_name', 'like', '%' . $search . '%')
+                            ->orWhere('display_name', 'like', '%' . $search . '%');
+                    });
+            });
+        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+            if ($trashed === 'with') {
+                $query->withTrashed();
+            } elseif ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
+        });
+    }
+
+    /**
+     * Create a user to allow access.
+     *
+     * @param string                             $email
+     * @param collection|object|array|string|int $roles
+     *
+     * @return \App\Models\User
+     */
+    public function generateActiveUser($email, $roles)
+    {
+        $user = static::firstOrCreate(compact('email'));
+
+        $user->setStatus(Status::ACTIVE);
+        $user->roles()->attach($roles);
+        $user->trackTime('invited_at');
+
+        Detail::firstOrCreate([
+            'user_id'      => $user->id,
+            'display_name' => $email,
+        ]);
+
+        Timestamp::firstOrCreate([
+            'user_id' => $user->id,
+        ]);
+
+        return $user;
     }
 
     /**

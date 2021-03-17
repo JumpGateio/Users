@@ -35,7 +35,7 @@ trait CanInvite
     public function inviteNewUser($email, $roles)
     {
         $user = static::firstOrCreate(compact('email'));
-        $user->assignRole($roles);
+        $user->attachRole($roles);
 
         /** @var Invitation $invites */
         $invites = app(Invitation::class);

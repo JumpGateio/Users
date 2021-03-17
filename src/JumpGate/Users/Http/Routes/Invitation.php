@@ -21,35 +21,37 @@ class Invitation extends BaseRoute implements Routes
 
     public function routes(Router $router)
     {
-        if (config('jumpgate.users.allow_invitations') === true) {
-            $this->standardAuth($router);
+        if (! config('jumpgate.users.settings.allow_invitations')) {
+            return true;
         }
+
+        $this->standardAuth($router);
     }
 
     private function standardAuth(Router $router)
     {
         $router->get('sent')
-               ->name('auth.invitation.sent')
-               ->uses('Invitation@sent');
+            ->name('auth.invitation.sent')
+            ->uses('Invitation@sent');
 
         $router->get('generate/{user_id}')
-               ->name('auth.invitation.generate')
-               ->uses('Invitation@generate');
+            ->name('auth.invitation.generate')
+            ->uses('Invitation@generate');
 
         $router->get('inactive')
-               ->name('auth.invitation.inactive')
-               ->uses('Invitation@inactive');
+            ->name('auth.invitation.inactive')
+            ->uses('Invitation@inactive');
 
         $router->get('re-send/{token}')
-               ->name('auth.invitation.resend')
-               ->uses('Invitation@resend');
+            ->name('auth.invitation.resend')
+            ->uses('Invitation@resend');
 
         $router->get('failed/{token}')
-               ->name('auth.invitation.failed')
-               ->uses('Invitation@failed');
+            ->name('auth.invitation.failed')
+            ->uses('Invitation@failed');
 
         $router->get('{token}')
-               ->name('auth.invitation.activate')
-               ->uses('Invitation@activate');
+            ->name('auth.invitation.activate')
+            ->uses('Invitation@activate');
     }
 }

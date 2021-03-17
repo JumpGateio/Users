@@ -34,6 +34,7 @@ class UsersServiceProvider extends ServiceProvider
         $this->loadConfigs();
         $this->loadMigrations();
         $this->loadViews();
+        $this->loadComponents();
         $this->loadCommands();
         $this->loadPublishable();
     }
@@ -67,7 +68,10 @@ class UsersServiceProvider extends ServiceProvider
      */
     protected function loadViews()
     {
-        if ($this->app['config']->get('jumpgate.users.load_views')) {
+        $loadFiles = $this->app['config']->get('jumpgate.users.load_files');
+        $driver    = $this->app['config']->get('jumpgate.users.driver');
+
+        if ($driver === 'blade' && $loadFiles) {
             $viewPath = __DIR__ . '/../../../views/' . $this->app['config']->get('app.css_framework');
 
             $this->app['view']->addLocation($viewPath);
@@ -78,6 +82,27 @@ class UsersServiceProvider extends ServiceProvider
             $this->publishes([
                 $viewPath . '/auth'  => resource_path('views/vendor/auth'),
                 $viewPath . '/admin' => resource_path('views/vendor/admin'),
+            ]);
+        }
+    }
+
+    /**
+     * Register inertia components.
+     */
+    protected function loadComponents()
+    {
+        $loadFiles = $this->app['config']->get('jumpgate.users.load_files');
+        $driver    = $this->app['config']->get('jumpgate.users.driver');
+
+        if ($driver === 'inertia' && $loadFiles) {
+            $componentPath = __DIR__ . '/../../../components/';
+
+            $this->loadViewsFrom($componentPath . '/auth', 'jumpgate.users.auth');
+            $this->loadViewsFrom($componentPath . '/admin', 'jumpgate.users.admin');
+
+            $this->publishes([
+                $componentPath . '/auth'  => resource_path('js/Pages/Auth'),
+                $componentPath . '/admin' => resource_path('js/Pages/Admin'),
             ]);
         }
     }
@@ -100,8 +125,9 @@ class UsersServiceProvider extends ServiceProvider
     private function loadPublishable()
     {
         $publishDirectory = __DIR__ . '/../../../publish/';
+        $driver           = $this->app['config']->get('jumpgate.users.driver');
 
-        $this->publishes([
+        $publishable = [
             $publishDirectory . 'Commands/UserDatabase.php'        => app_path('Console/Commands/JumpGate/UserDatabase.php'),
             $publishDirectory . 'Http/Composers/AdminSidebar.php'  => app_path('Http/Composers/AdminSideBar.php'),
             $publishDirectory . 'Http/Composers/Menu.php'          => app_path('Http/Composers/Menu.php'),
@@ -109,8 +135,17 @@ class UsersServiceProvider extends ServiceProvider
             $publishDirectory . 'Models/User.php'                  => app_path('Models/User.php'),
             $publishDirectory . 'Providers/Composer.php'           => app_path('Providers/ComposerServiceProvider.php'),
             $publishDirectory . 'Providers/Event.php'              => app_path('Providers/EventServiceProvider.php'),
-            $publishDirectory . 'Services/Admin/'                  => app_path('Services/Admin/'),
             $publishDirectory . 'config/route.php'                 => base_path('config/route.php'),
-        ], 'user_template_files');
+            $publishDirectory . 'factories/User'                   => base_path('database/factories/User/'),
+            $publishDirectory . 'factories/UserFactory.php'        => base_path('database/factories/UserFactory.php'),
+        ];
+
+        if ($driver === 'inertia') {
+            $publishable[$publishDirectory . 'Services/Inertia/Admin'] = app_path('Services/Admin/');
+        } else {
+            $publishable[$publishDirectory . 'Services/Admin'] = app_path('Services/Admin/');
+        }
+
+        $this->publishes($publishable, 'user_template_files');
     }
 }
