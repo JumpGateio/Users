@@ -125,7 +125,6 @@ class UsersServiceProvider extends ServiceProvider
     private function loadPublishable()
     {
         $publishDirectory = __DIR__ . '/../../../publish/';
-        $driver           = $this->app['config']->get('jumpgate.users.driver');
 
         $publishable = [
             $publishDirectory . 'Commands/UserDatabase.php'        => app_path('Console/Commands/JumpGate/UserDatabase.php'),
@@ -133,18 +132,12 @@ class UsersServiceProvider extends ServiceProvider
             $publishDirectory . 'Http/Composers/Menu.php'          => app_path('Http/Composers/Menu.php'),
             $publishDirectory . 'Http/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
             $publishDirectory . 'Models/User.php'                  => app_path('Models/User.php'),
-            $publishDirectory . 'Providers/Composer.php'           => app_path('Providers/ComposerServiceProvider.php'),
             $publishDirectory . 'Providers/Event.php'              => app_path('Providers/EventServiceProvider.php'),
+            $publishDirectory . 'Services/Admin'                   => app_path('Services/Admin/'),
             $publishDirectory . 'config/route.php'                 => base_path('config/route.php'),
             $publishDirectory . 'factories/User'                   => base_path('database/factories/User/'),
             $publishDirectory . 'factories/UserFactory.php'        => base_path('database/factories/UserFactory.php'),
         ];
-
-        if ($driver === 'inertia') {
-            $publishable[$publishDirectory . 'Services/Inertia/Admin'] = app_path('Services/Admin/');
-        } else {
-            $publishable[$publishDirectory . 'Services/Admin'] = app_path('Services/Admin/');
-        }
 
         $this->publishes($publishable, 'user_template_files');
     }
