@@ -69,14 +69,14 @@ class UserDatabase extends Command
     {
         if (Status::count() === 0) {
             $this->comment('Seeding user_statuses...');
-            $this->call('db:seed', ['--class' => 'UserStatus']);
+            $this->call('db:seed', ['--class' => '\UserStatus']);
         } else {
             $this->comment('Table user_statuses is not empty.  Skipping seed...');
         }
 
         if (Role::count() === 0) {
             $this->comment('Seeding rbac_roles...');
-            $this->call('db:seed', ['--class' => 'LaratrustSeeder']);
+            $this->call('db:seed', ['--class' => '\LaratrustSeeder']);
         } else {
             $this->comment('Table rbac_roles is not empty.  Skipping seed...');
         }
