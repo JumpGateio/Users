@@ -28,6 +28,7 @@ class EventServiceProvider extends ServiceProvider
             \JumpGate\Users\Listeners\BlockIfRegistrationDisabled::class,
         ],
         \JumpGate\Users\Events\UserRegistered::class  => [],
+        \JumpGate\Users\Events\UserLoggedOut::class  => [],
     ];
 
     /**
