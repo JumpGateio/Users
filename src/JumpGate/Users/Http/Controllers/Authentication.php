@@ -3,6 +3,7 @@
 namespace JumpGate\Users\Http\Controllers;
 
 use App\Http\Controllers\BaseController;
+use JumpGate\Users\Events\UserLoggedOut;
 use JumpGate\Users\Http\Requests\Login;
 use JumpGate\Users\Services\Login as LoginService;
 
@@ -75,7 +76,10 @@ class Authentication extends BaseController
      */
     public function logout()
     {
+        $user = auth()->user();
         auth()->logout();
+
+        event(new UserLoggedOut($user));
 
         return redirect()
             ->route('home')
