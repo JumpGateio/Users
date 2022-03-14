@@ -37,7 +37,7 @@ class LaratrustSetupTables extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('user_type');
 
-            $table->foreign('role_id')->references('id')->on('roles')
+            $table->foreign('role_id')->references('id')->on('rbac_roles')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->primary(['user_id', 'role_id', 'user_type']);
@@ -49,7 +49,7 @@ class LaratrustSetupTables extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('user_type');
 
-            $table->foreign('permission_id')->references('id')->on('permissions')
+            $table->foreign('permission_id')->references('id')->on('rbac_permissions')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->primary(['user_id', 'permission_id', 'user_type']);
@@ -60,9 +60,9 @@ class LaratrustSetupTables extends Migration
             $table->unsignedBigInteger('permission_id');
             $table->unsignedBigInteger('role_id');
 
-            $table->foreign('permission_id')->references('id')->on('permissions')
+            $table->foreign('permission_id')->references('id')->on('rbac_permissions')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')
+            $table->foreign('role_id')->references('id')->on('rbac_roles')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->primary(['permission_id', 'role_id']);
