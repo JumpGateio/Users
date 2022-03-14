@@ -13,11 +13,11 @@
         }
     ],
     "require": {
-        "laravel/framework": "~8.0",
-        "jumpgate/core": "~3.0",
-        "jumpgate/view-resolution": "^4.0",
-        "laravelcollective/html": "^6.2",
-        "santigarcor/laratrust": "^6.3"
+        "laravel/framework": "~9.0",
+        "jumpgate/core": "~4.0",
+        "jumpgate/view-resolution": "^5.0",
+        "laravelcollective/html": "^6.3",
+        "santigarcor/laratrust": "^7.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
