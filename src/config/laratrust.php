@@ -18,7 +18,8 @@ return [
     | are going to be used are the ones inside the 'user_models' array.
     |
     */
-    'use_morph_map'         => false,
+
+    'use_morph_map' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -33,7 +34,8 @@ return [
     |           This method doesn't support cache yet.
     |
      */
-    'checker'               => 'default',
+
+    'checker' => 'default',
 
     /*
     |--------------------------------------------------------------------------
@@ -44,7 +46,9 @@ return [
     | config/cache.php file.
     |
     */
-    'cache'                 => [
+
+    'cache' => [
+
         /*
         |--------------------------------------------------------------------------
         | Use cache in the package
@@ -54,7 +58,8 @@ return [
         | NOTE: Currently the database check does not use cache.
         |
         */
-        'enabled'         => env('LARATRUST_ENABLE_CACHE', true),
+
+        'enabled' => env('LARATRUST_ENABLE_CACHE', env('APP_ENV') === 'production'),
 
         /*
         |--------------------------------------------------------------------------
@@ -64,6 +69,7 @@ return [
         | Determines the time in SECONDS to store Laratrust's roles and permissions in the cache.
         |
         */
+
         'expiration_time' => 3600,
     ],
 
@@ -80,7 +86,8 @@ return [
     | The key in the array is the name of the relationship inside the roles and permissions.
     |
     */
-    'user_models'           => [
+
+    'user_models' => [
         'users' => \App\Models\User::class,
     ],
 
@@ -94,22 +101,11 @@ return [
     | to have a different name, you can do it here.
     |
     */
-    'models'                => [
-        /**
-         * Role model
-         */
+
+    'models' => [
         'role'       => 'JumpGate\Users\Models\Role',
-
-        /**
-         * Permission model
-         */
         'permission' => 'JumpGate\Users\Models\Permission',
-
-        /**
-         * Team model
-         */
         'team'       => 'App\Team',
-
     ],
 
     /*
@@ -120,20 +116,10 @@ return [
     | These are the tables used by Laratrust to store all the authorization data.
     |
     */
-    'tables'                => [
-        /**
-         * Roles table.
-         */
+
+    'tables' => [
         'roles'           => 'rbac_roles',
-
-        /**
-         * Permissions table.
-         */
         'permissions'     => 'rbac_permissions',
-
-        /**
-         * Teams table.
-         */
         'teams'           => 'rbac_teams',
 
         /**
@@ -161,7 +147,8 @@ return [
     | These are the foreign keys used by laratrust in the intermediate tables.
     |
     */
-    'foreign_keys'          => [
+
+    'foreign_keys' => [
         /**
          * User foreign key on Laratrust's role_user and permission_user tables.
          */
@@ -192,7 +179,8 @@ return [
     | This configuration helps to customize the Laratrust middleware behavior.
     |
     */
-    'middleware'            => [
+
+    'middleware' => [
         /**
          * Define if the laratrust middleware are registered automatically in the service provider
          */
@@ -242,6 +230,7 @@ return [
         | Please check the docs to see what you need to do in case you have the package already configured.
         |
         */
+
         'enabled' => false,
 
         /*
@@ -255,6 +244,7 @@ return [
         | it will check only if the user has attached that role/permission ignoring the team.
         |
         */
+
         'strict_check' => false,
     ],
 
@@ -267,6 +257,7 @@ return [
     | Available: camel_case|snake_case|kebab_case
     |
     */
+
     'magic_is_able_to_method_case' => 'kebab_case',
 
     /*
@@ -277,6 +268,7 @@ return [
     | Determines if you can check if a user has a permission using the "can" method.
     |
     */
+
     'permissions_as_gates' => false,
 
     /*
@@ -287,6 +279,7 @@ return [
     | Section to manage everything related with the admin panel for the roles and permissions.
     |
     */
+
     'panel' => [
         /*
         |--------------------------------------------------------------------------
@@ -297,6 +290,7 @@ return [
         | Turn this value to false if you don't want to use Laratrust admin panel
         |
         */
+
         'register' => false,
 
         /*
@@ -308,6 +302,7 @@ return [
         | will be accessible from.
         |
         */
+
         'path' => 'laratrust',
 
         /*
@@ -318,6 +313,7 @@ return [
         | The route where the go back link should point
         |
         */
+
         'go_back_route' => '/',
 
         /*
@@ -328,6 +324,7 @@ return [
         | These middleware will get attached onto each Laratrust panel route.
         |
         */
+
         'middleware' => ['web'],
 
         /*
@@ -338,7 +335,18 @@ return [
         | Enable/Disable the permissions assignment to the users.
         |
         */
+
         'assign_permissions_to_user' => true,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Enable permissions creation
+        |--------------------------------------------------------------------------
+        |
+        | Enable/Disable the possibility to create permissions from the panel.
+        |
+        */
+        'create_permissions'         => true,
 
         /*
         |--------------------------------------------------------------------------
@@ -349,12 +357,13 @@ return [
         | To add a role to the restriction, use name of the role here.
         |
         */
+
         'roles_restrictions' => [
             // The user won't be able to remove roles already assigned to users.
             'not_removable' => [],
 
             // The user won't be able to edit the role and the permissions assigned.
-            'not_editable' => [],
+            'not_editable'  => [],
 
             // The user won't be able to delete the role.
             'not_deletable' => [],
