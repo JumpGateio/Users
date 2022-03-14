@@ -86,7 +86,7 @@ return [
     */
 
     'default_route' => [
-        'name'    => 'auth.login',
+        'name'    => 'auth.social.login',
         'options' => [],
     ],
 
@@ -103,7 +103,7 @@ return [
     |
     */
 
-    'enable_social' => false,
+    'enable_social' => true,
 
     'providers' => [
         [
@@ -134,5 +134,5 @@ return [
     |
     */
 
-    'social_auth_only' => false,
+    'social_auth_only' => true,
 ];
