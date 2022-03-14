@@ -31,7 +31,6 @@ class UserDatabase extends Command
     public function handle()
     {
         $this->verifyConfig();
-        $this->verifyMigrated();
         $this->seedUserTables();
 
         $this->info('Finished!');
@@ -48,18 +47,6 @@ class UserDatabase extends Command
             $this->comment('Please update your config/jumpgate/users.php config.');
             die;
         }
-    }
-
-    /**
-     * Run the initial migrate command if it has not been run.
-     */
-    private function verifyMigrated()
-    {
-        $this->comment('Running migrate command...');
-
-        $this->call('laratrust:migration', ['--no-interaction']);
-
-        $this->call('migrate');
     }
 
     /**
