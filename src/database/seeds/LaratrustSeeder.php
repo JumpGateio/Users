@@ -113,7 +113,7 @@ class LaratrustSeeder extends Seeder
         DB::table('rbac_permission_role')->truncate();
         DB::table('rbac_permission_user')->truncate();
         DB::table('rbac_role_user')->truncate();
-        \App\Models\User::truncate();
+        // \App\Models\User::truncate();
         \JumpGate\Users\Models\Role::truncate();
         \JumpGate\Users\Models\Permission::truncate();
         Schema::enableForeignKeyConstraints();
