@@ -137,6 +137,7 @@ class UsersServiceProvider extends ServiceProvider
             $publishDirectory . 'config/route.php'                 => base_path('config/route.php'),
             $publishDirectory . 'factories/User'                   => base_path('database/factories/User/'),
             $publishDirectory . 'factories/UserFactory.php'        => base_path('database/factories/UserFactory.php'),
+            $publishDirectory . 'seeds'                            => base_path('database/seeds/'),
         ];
 
         $this->publishes($publishable, 'user_template_files');

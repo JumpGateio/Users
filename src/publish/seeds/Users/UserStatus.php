@@ -1,13 +1,13 @@
 <?php
 
-use JumpGate\Core\Abstracts\Seeder;
+namespace Database\Seeders\Users;
 
-class UserStatus extends Seeder
+use Database\Seeders\Base;
+
+class UserStatus extends Base
 {
     public function run()
     {
-        $this->truncate('user_statuses');
-
         $statuses = [
             [
                 'name'  => 'active',
@@ -24,6 +24,6 @@ class UserStatus extends Seeder
         ];
 
         // Add any data to the table.
-        $this->db->table('user_statuses')->insert($statuses);
+        $this->seed('user_statuses', $statuses);
     }
 }

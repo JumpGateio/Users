@@ -38,10 +38,12 @@ return [
         // when registration is disabled, you will have to add them through
         // the admin panel.  They can only log in if the user exists.
         'allow_registration'       => false,
-
         // This will give you the option in the admin dashboard to send
         // user an invitation to the site through email.
         'allow_invitations'        => false,
+
+        // Tells the User seeder to create the default users.  These are defined in DefaultUsers::class.
+        'create_default_users'     => true,
     ],
 
     /*
