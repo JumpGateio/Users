@@ -28,7 +28,6 @@
     "autoload": {
         "classmap": [
             "src/database/migrations",
-            "src/database/seeds",
             "src/database/social_migrations"
         ],
         "psr-4": {
